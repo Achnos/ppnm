@@ -1,0 +1,16 @@
+# This is a makefile. 
+
+CFLAGS = -Wall -std=gnu99 #This is a macro definition
+# The macro can be called as $(CFLAGS) and will return the string "-Wall -std=gnu99". 
+
+## Rules ##
+#A rule looks very much like an instruction for preparing a dish. It has the following syntax,
+#dish : ingredients
+#⊣ recipe 
+
+Rules
+A rule looks very much like an instruction for preparing a dish. It has the following syntax,
+
+dish : ingredients
+⊣recipe
+<

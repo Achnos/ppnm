@@ -1,0 +1,91 @@
+------ Praktisk Programmering og Numeriske Metoder Answers ------
+
+######################################################################################################################
+# ------------------------------------------------------------------------------------------------------------------ #
+# -------------------------------------------------- Questions 1 --------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------ #
+######################################################################################################################
+
+- How do you search your man-pages for a given keyword?
+  Hint: man man|less +/keyword -j.5
+
+	¤ Considering the hint, and breaking down the syntax:
+	  - 'man man' is the manual page of the command 'man'.
+	  - This is then piped, by usage of the keyword '|',  into the command 'less'. Less is like more, but has more features. Both display text in the terminal.
+	  - In less we may use the option '+/pattern'. When opening the file piped into less in this way, we open at the line of the first occurence of 'pattern' in the document from the pipe. 
+	    Hence we open the man page of man, at the first line that has the word 'keyword'.
+	  - Lastly the option '-j.5' or equivalently '-j .5' specifies an option to less, and tells us we want it to start at a line that is 50% before the one we specified (by +/keyword).
+	    We could instead have given a number, say '-j 5', then we would have started at the line, 5 lines before, the line that first contains 'keyword'. 
+	    Put in other words we start at the line that has 'keyword', and move up 5 lines. 
+
+- Suppose you need to type the command basename. Which characters do you need to type in your system before command-line completion can complete your typing? 
+	
+	¤ I tested this in the terminal. There are many occurences of b, and even three that starts with base. We should hence type basen and tab to autocomplete.
+
+- In many systems command-line completion can also complete long options to many POSIX utilities. Does your shell completes long options? Suppose you need to type the command mkdir --parents. 
+  Which characters do you need to actually type when using command-line completion? 
+
+	¤ I need to type mkdir --p
+	  
+- How do you create a folder with a subfolder (say prog/hello)? Hint: man mkdir | grep -B1 "make parent". 
+	
+	¤ The hint takes us, as described in the example above, to a man page of mkdir, but displays only the section found by grep, containing "make parent", where the '-B1' 
+	  option specifies how many lines to print before. B is for before, 1 for one line. Could have used A for after or C for both after and before.
+	
+	  'mkdir -p folder/subfolder' will make a directory as folder/subfolder. To be precise. We use mkdir to create the directory folder/subfolder (subfolder in folder), but need to use 
+	  the command '-p', parents, to specify that we need to create the parent folders as well. We could have been in the parent folder of /folder, and create /subfolder inside /folder, if /folder
+	  already existed. 
+
+	  We can now create the folder with a subfolder by using the comman
+		
+		mkdir -p prog/hello
+	
+	  Or remove it using the equivalent 
+
+		rmdir -p prog/hello
+
+- Which option instructs the rm command to ask the user for a confirmation before every removal? Hint: man rm|grep "prompt before". 
+	
+	¤ The command 'rm -i ___ ' will do the job. The flag '-i' prompts for a [y/n] before proceeding. 
+
+- Which option instructs the rm command to remove a folder with all subfolders? Hint: man rm|grep -B1 "remove directories". 
+
+	¤ I already covered this question above. The command is 'rmdir -p folder/subfolder'. Alternatively as suggested by the hint, we could also simply use the command 'rm -r folder',
+	  as this will remove all subfolders as well
+
+- Which unix command lists the files in a directory in one column sorted by modification time with the newest last? 
+	
+	¤ A quick search using 'man ls | less +/modifi -j .5' reveals that the sought after command is simply 'ls -c -lt' if we want to see time stamps (l is for long format),
+	  or simply 'ls -t' to sort by modification time (or tr for reverse)  
+
+- What do symbols ., .., ~ mean in the context of the unix file utilities? 
+
+	¤ Apparently there is no man page for 'cd' since it is a built in shell command. However, '.' denotes a hidden file, say, '.doc' is hidden under normal usage of the 'ls' command
+	  This can be circumvented (show the hidden files) by using the option '-a' with 'ls'. 
+		
+	  If we are talking about directories instead of files, then '.' is the current directory, while '..' is the parent directory. Hence, this is why 'cd ..' will take us up one level in the file tree,
+	  because it takes us to the parent directory. Thus, 'cd .' does nothing (but takes us into the same directory i guess...). This also explains why, in order to, say, run a program 'some_program' 
+	  that currently exists in the current directory, i would have to type './some_program' (given that it is a proper unix exectutable, that is). This tells the system, run 'some_program' from this 
+	  directory ('.'), and is also acting as a safety measure. We can imagine, that if i had several programs on my computer, in the file tree, that were named 'some_program', and i just tried to type 
+	  '...:~$ some_program', UNIX doesn't know which program (from which subfolder) it should run, but the inclusion of './' in front tells us it is the one from the current directory.  
+
+	  Lastly, '~' is simply the shorthand of /home/user, where user is the current user, e.g '~' is the same as '/home/marc' for me. We get there by using 'cd ~', or simply 'cd '.
+
+	  '$' is the status of the last command, hence why the left hand side of the terminal has something like 'username@pc-name:~$ [some output]'. This line simply tells me that my system got an output
+	  from some command i just ran. We can get this last status back again by using '$?'.
+		
+- Where will the command cd without any arguments lead you? 
+
+	¤ I answered this above. It will take me to the highest home user directory, in my case 'home/marc'
+
+- What is your home directory? Name also alternative notations. 
+
+	¤ The home directory is a directory that contains the user directories for each particular users of the system, and consists of subfolders or other files, and is also referred to as the login 
+	  directory. In my case it contains two folders, 'marc' and 'sofie' since these are the users of my system. The subfolder 'marc', for example, and all other user subfolders (like 'sofie')
+	  are for shorthand denoted with '~'.   
+	  This is the first place that occurs after logging into a Linux system. It is automatically created as "/home" for each user in the directory'.
+	  It is a standard subdirectory of the root directory. The root directory contains all other directories, subdirectories, and files on the system. It is the highest 
+	  level of the file system tree we can go to. It is denoted by a forward slash (/).
+
+
+######################################################################################################################
