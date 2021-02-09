@@ -1,0 +1,95 @@
+ Questions "make"
+
+-What is the meaning of the following makefile variables: $@, $<, $^, CFLAGS, LDFLAGS, LDLIBS.
+
+	¤ The variables $@, $<, $^ are all so called automatic variables in make. The make utility has so called predefined implicit rules. Say we wish to link an object file 'foo.o',
+	  and our make file contains a rule to do so, but not a dependent rule for how to compile foo.o, and the directory does not necessarily contain 'foo.o'. Maybe it contains 'foo.c'
+	  Make will then recursively search for an appropriate implicit rule to use in order to compile 'foo.c', as it is an appropriate file of appropriate suffix 
+	  (from the $(SUFFIX) implicit variable), to construct the object file 'foo.o' from 'foo.c'. This is an example of an implicit rule using an implicit variable. As an addition to this
+	  maybe our directory contained 'foo.p'. In that case make will find the implicit rule that uses the pascal compiler, since in this case the appropriate files matches with a suffix
+	  given by the default $(SUFFIX) variable. Make comes with a default set of implicit rules and related implicit variables. We may redeclare these in our program. 
+	  
+	  We have a subset of the implicit rules that we call pattern rules. These are specified where both the prerequisite and targets have an inclusion of the character '%'.
+	  An example is 
+	  	
+	  	%.o : %.c ; recipe…
+
+	  In which we specify a pattern rule that compiles an arbitrary target object file from a given arbitrary .c file as prerequisite. This is a less general example of the built in 
+	  make pattern rule specified as
+	  
+		%.o : %.c
+		$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+		
+	  In which we see usage of the above variables in question. We use automatic variables;
+		
+		$@: Is the filename of the target of the rule. Hence if there are multiple targets to a rule, then this variable is the name of the given target that causes the rule to be executed. 
+		
+		$<: The name of the first prerequisite. In the present case it represents the given .c file.
+		
+		$^: The names of all the prerequisites with spaces between them. This could have been used in place of $< i guess, if we have more prerequisites. 
+		
+	  CFLAGS, LDFLAGS, LDLIBS are examples of variables used by implicit Rules. CFLAGS specifies which flags to use during usage of the implicit compilation rule of say compiling a .c file. 
+	  LDFLAGS are extra compile flags to specify to the compiler when invoking the linker 'ld', while LDLIBS are library flags in the same stage.
+		
+		
+
+- What will the following makefile print (after running command make) and why,
+
+    CFLAGS = -Wall -Ofast -std=c1x
+    C = F
+    all:
+    	echo CFLAGS
+    	echo $CFLAGS
+    	echo $(C)FLAGS
+    	echo $(CFLAGS)
+    	
+    	¤ Here we redefine the $CFLAGS implicit rule variable, to include '-Wall' for full warning coverage (specify all warnings and errors), '-Ofast' to optimize fully, 
+    	  and '-std=c1x' to specify a given c compilation standard. Here i guess '1x' is placeholder for '11' or '17' for example. The makefile only has one target, 'all' which uses 'echo'
+    	  to print four statements to the terminal. When run we get the output
+    	  
+    	  CFLAGS   			--> 	Since we simply echo the string 'CLFAGS'
+    	  FFLAGS   			--> 	Since $CFLAGS is interpreted as printing the variable $C = F and then the string 'FLAGS'
+    	  FFLAGS  			--> 	Since $(C) and $C is the same, as variable referencing is the same if the variable only has one character in its name. This naturally leads to conflicts
+    	  -Wall -Ofast -std=c1x	--> 	Since we are now successfully referencing the CFLAGS variable
+
+
+
+- Suppose you have your whole C-program in one file main.c. Which of the following makefiles will compile and link the program into the executable file main?
+
+        all: main
+
+        main: main.c
+
+        main: main.o
+
+        all: main
+        main: main.o
+        main.o: main.c
+
+        all: main
+        main.o: main.c
+        main: main.o
+
+        main.o: main.c
+        all: main
+        main: main.o
+
+        main: main.c
+        	cc main.c -o main
+
+        main: main.c
+        	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+        all: main
+        main: main.o
+        	cc main.o -o main
+        main.o: main.c
+        	cc -c main.c -o main.o
+        	
+        	¤ The first two, the fourth and fifth will create an executable by usage of implicit rules. The ordering inn the fifth doesn't really matter since we don't need the specification
+        	  of an explicit rule to compile here. The second will only create an object by using implicit rules, while the sixth will not create an executable since the ordering doesn't 
+        	  allow for the executable to have any dependencies on it. Seventh and eigth will compile and create an executable since we compile an link in one step, the latter using the 
+        	  implicit variables, and redundant automatic variables. Here $@ will just give the '-o' outputname flag the target as a name, which in this case is simply main. The last makefile 
+        	  option also works. This is a classic makefile such as my general makefile.
+
+    Remember that the tabulator-sign before the command may not be copy-pasted correctly. 
