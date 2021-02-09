@@ -8,5 +8,5 @@ read  COMMIT 				# to input the commit text
 # This will initiallize, add all changes, commit and push
 git init
 git add --all
-git commit --all -m $COMMIT
+git commit --all -m  '$COMMIT'
 git push
