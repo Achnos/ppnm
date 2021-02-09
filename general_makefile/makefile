@@ -8,10 +8,10 @@
 
 
 # --- ABOUT MAKEFILES, BASIC SYNTAX, MACRO DEFINITIONS, VARIABLES AND RULES ----------------------------------------------------------------------------------------------------------------------- #
-# --- 
+# ---
 # make is a utillity to manage project in computer filesystems, where objects are manipulated according to certain rules. A makefile should always have the name 'makefile' otherwise it must,
 # if it is called SomethingElse, the make utility is called with 'make -f SomethingElse'.
-# When make is run it automatically reads the descriptions in the makefile and updates the project if  necessary. 
+# When make is run it automatically reads the descriptions in the makefile and updates the project if  necessary.
 # ---
 ### Macro definitions
 # A macro definition looks like a normal assignment in a programming language,
@@ -38,7 +38,9 @@
 
 
 # --- SPECIFY COMPILER FLAGS  --- #
-CFLAGS      =  -Wall -lm
+CFLAGS      =  -Wall #-O
+CC 					=  gcc 			# the C compiler
+LDLIBS 			=  -lm 			# libraries to link
 
 
 # --- SPECIFY HYPERPARAMETERS --- #
@@ -46,22 +48,26 @@ FILES       =  somefile.c
 OBJECTS     =  someobject.o
 OUTPUTFILE  =  someoutput.txt
 PROGRAM     =  someprogram
+DISPLAY     =  cat
 
 
-$(OUTPUTFILE) : $(PROGRAM)                  	# someoutput.txt depends on someprogram
-	./$(PROGRAM) > $(OUTPUTFILE)  		# Generate someoutput.txt and send the terminal output of someprogram into it.
-			        	 	# This target basically runs the program and sends it into a .txt file called someoutput.txt
+default: $(OUTPUTFILE)									  	# default target is to make out.txt
+	$(DISPLAY) $(OUTPUTFILE) 									# show out.txt on the screen
+
+$(OUTPUTFILE) : $(PROGRAM)                  # someoutput.txt depends on someprogram
+	./$(PROGRAM) > $(OUTPUTFILE)  						# Generate someoutput.txt and send the terminal output of someprogram into it.
+			        	 														# This target basically runs the program and sends it into a .txt file called someoutput.txt
 
 
-$(PROGRAM) : $(OBJECTS)     	      		# Someprogram depends on someobject.o
-	gcc $(OBJECTS) -o $(PROGRAM) $(CFLAGS)  # Now we link the object file, someobject.o to an output program ('-o') called someprogram. 
-						# This is how you make someprogram from someobject.o
+$(PROGRAM) : $(OBJECTS)     	      			  # Someprogram depends on someobject.o
+	$(CC) $(OBJECTS) -o $(PROGRAM) $(CFLAGS)  # Now we link the object file, someobject.o to an output program ('-o') called someprogram.
+																						# This is how you make someprogram from someobject.o
 
 
-$(OBJECTS) : $(FILES)          			# someobject.o depends on somefile.c
-	gcc -c $(FILES)       		 	# '-c' flag means compile only and do not link. This is how you make the object file someobject.o from somefile.c
+$(OBJECTS) : $(FILES)          							# someobject.o depends on somefile.c
+	$(CC) -c $(FILES) -o $(OBJECTS) 					# '-c' flag means compile only and do not link. This is how you make the object file someobject.o from somefile.c
 
 
 .PHONEY: clean
-clean:                 	      		 	  # This is "clean" target it does not depend on anything
+clean:                 	      		 	  			# This is "clean" target it does not depend on anything
 	rm -f $(OUTPUTFILE) $(OBJECTS) $(PROGRAM) # This target functions as expected, it cleans up the directory of program files.
