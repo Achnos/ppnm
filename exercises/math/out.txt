@@ -1,11 +1,11 @@
 Gamma(5) 	 is equal to 24 + 0i 
 J_1(5)   	 is equal to 0.242268 + 0i 
-Sqrt(-2) 	 is equal to -nan + 0i 
-e^{i}    	 is equal to 1 + 0i 
-e^{i*pi} 	 is equal to 1 + 0i 
-i^{e}    	 is equal to 0 + 0i 
+Sqrt(-2) 	 is equal to 0 + 1.41421i 
+e^{i}    	 is equal to 0.540302 + 0.841471i 
+e^{i*pi} 	 is equal to -1 + 1.22465e-16i 
+i^{e}    	 is equal to -0.42822 + -0.903675i 
 
-Find out how many significant digits variables of types float, double, and long double can hold in them by trying to store the number 0.1111111111111111111111111111 
+Find out how many significant digits variables of types float, double, and long double can hold in them by calculating the ratio 1/9 with the corresponding precision and then printing out the result.
 
 Float:       0.1111111119389533996582031  
 Double:      0.1111111111111111049432054 

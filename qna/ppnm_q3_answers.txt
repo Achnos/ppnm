@@ -1,0 +1,108 @@
+------ Praktisk Programmering og Numeriske Metoder Answers ------
+
+######################################################################################################################
+# ------------------------------------------------------------------------------------------------------------------ #
+# -------------------------------------------------- Questions 2 --------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------ #
+######################################################################################################################
+
+Questions 2
+
+- What is the main function?
+
+	¤ The C programming language main function is a compulsory function. It is the function that the system calls from the command line,
+	  which then will in turn call other functions within the program. The main function may be defined such as
+		
+		int main() {...} /* no arguments to main */
+		int main(void) {...} /* no arguments to main */
+		int main(int argc, char *argv[]) {...} /* arguments in the array-of-arrays argv */
+		int main(int argc, char **argv) {...} /* the same as above */
+
+- What is compilation and linking (of a C-program)? What is source code, object code, executable code?
+
+	¤ The program is initially written as C, which is a low-level abstraction relative to the machine. In order for the computer to understand the program
+	  it needs to be 'translated' into the CPU language. The compiler does this for us. In doing so, an object is created. This object may then be linked
+	  with all the necessary libraries, or other dependencies (needed programs), creating an executable (historically a.out as default), that may then be 
+	  run from the terminal by ./a.out. Source code is the initial .c file, which during compilation is translated into object code. After all necessary
+	  programs needed have been compiled into object code, these may be linked to form an executable.
+
+- How can you compile and link a C-program which is wholly contained in one file, say hello.c? How do you run the resulting executable code?
+
+	¤ This can actually be done in one step wholly, since the pre-processing stage inserts any headers and libraries included with #include ""/<>. For 
+	  the present example we may simply specify to the command line
+		
+		gcc hello.c
+	
+	  Which will link and compile the program to the (default) name 'a.out'. Having instead included '-c' would've omitted the linking stage. We could also
+	  have specified '-o somename' to name the program (executable) 'somename' instead. We can run this executable as
+
+		./a.out
+
+- How do you supply the compiler with the description of the printf function? Why do you need to do this? How do you link the printf function?
+
+	¤ The 'printf()' function is contained in the header "stdio.h" which may be included by
+
+		#include <stdio.h> 
+	  or
+		#include "stdio.h"
+
+	  This will let the preprocessing stage of compilation insert the needed header file ('stdio.h') into the beginning of the program. This is necessary in order
+	  to refer to the correct libraries in which the standard C library functions have been implemented. 'stdio.h' is simply the standard input-output stream
+	  library according to the current C standard. When only using this library we do not need to link. The only standard library we need to link is the 'math.h'
+	  header file. This is for historical reasons and is done by usage of the compiler flag '-lm' during linking of the object files. The 'hello.c' program from
+	  the last question is exactly an example such as this case.
+
+- What is stdio.h? Why angle-brackets in #include<stdio.h>? Hint: C preprocessor: including files.
+
+	¤ I have already elaborated on this. Ordinarily, in fact i think it is by convention, we use <...> for standard libraries, but "..." for our own implementations
+	  of source header files. Again, we must include it in order to  use the function implementations contained therein.
+
+- How can you get the manual page of the C standard library function printf? Hint: there is also a utility printf in a POSIX system and man printf will show you the manual page for the printf utility, not the printf function from the C standard library.
+
+	¤ This can be achieved simply by
+		
+		man stdio
+
+	  which will display the C89 conforming documentation of stdio.h. Therein are listed, all the implemented methods belonging to that library, 
+	  and a description of the I/O stream. printf from stdio is the third printf found on the linux system, so to find its man page we should type
+		
+		man printf.3
+
+	  The complete list of printf man pages can be seen by
+
+		man -k printf
+
+	  From which it is seen which one we should read from. 
+
+- What are the built-in data types for numbers in the C-language?
+
+	¤ The built in datatypes are
+
+		type	Minimum size in bits	format specifier
+
+		char	8			%c
+		int	16 (32 for long)	%i or %d
+		float	32			%f or %g usually (more on wiki)
+		double	64 (128 for long)	%lf or %lg usually...
+		long	32
+		
+	  The last three can be included with prefix unsigned, short, long or long long - _____.
+		
+
+- What is the result of the operation 1/2 in C?
+
+	¤ This is integer division, so it will be rounded down to zero.
+
+- In order to use the C mathematical functions, do you need to include any header files? Link any library? Hint: man sin.
+
+	¤ Yes we do, we need to #include <math.h> and link with '-lm'
+
+- What is tgmath.h? If you use tgmath.h do you need to link any library? 
+
+	¤ tg stands for type-generic. It is a header that both includes 'math.h' and 'complex.h', hence it contains the same functions as 'math.h', but which
+	  can take other non-floating point values. Every function in <math.h> that takes at least one double as argument (except modf) is defined in <tgmath.h> 
+	  as a macro with the same semantics but taking generic parameters instead: Each of the arguments provided for these generic parameters that is of an integer type is 
+	  casted to a double; Arguments of floating-point types are used without transformation (directly as float, double or long double). This header automatically includes <math.h> 
+	  and <complex.h>: The type-generic function can also take complex values if the function exists in <complex.h> (prefixed with a "c" character).
+
+######################################################################################################################

@@ -1,108 +1,95 @@
------- Praktisk Programmering og Numeriske Metoder Answers ------
+ Questions "make"
 
-######################################################################################################################
-# ------------------------------------------------------------------------------------------------------------------ #
-# -------------------------------------------------- Questions 2 --------------------------------------------------- #
-# ------------------------------------------------------------------------------------------------------------------ #
-######################################################################################################################
+-What is the meaning of the following makefile variables: $@, $<, $^, CFLAGS, LDFLAGS, LDLIBS.
 
-Questions 2
+	¤ The variables $@, $<, $^ are all so called automatic variables in make. The make utility has so called predefined implicit rules. Say we wish to link an object file 'foo.o',
+	  and our make file contains a rule to do so, but not a dependent rule for how to compile foo.o, and the directory does not necessarily contain 'foo.o'. Maybe it contains 'foo.c'
+	  Make will then recursively search for an appropriate implicit rule to use in order to compile 'foo.c', as it is an appropriate file of appropriate suffix 
+	  (from the $(SUFFIX) implicit variable), to construct the object file 'foo.o' from 'foo.c'. This is an example of an implicit rule using an implicit variable. As an addition to this
+	  maybe our directory contained 'foo.p'. In that case make will find the implicit rule that uses the pascal compiler, since in this case the appropriate files matches with a suffix
+	  given by the default $(SUFFIX) variable. Make comes with a default set of implicit rules and related implicit variables. We may redeclare these in our program. 
+	  
+	  We have a subset of the implicit rules that we call pattern rules. These are specified where both the prerequisite and targets have an inclusion of the character '%'.
+	  An example is 
+	  	
+	  	%.o : %.c ; recipe…
 
-- What is the main function?
-
-	¤ The C programming language main function is a compulsory function. It is the function that the system calls from the command line,
-	  which then will in turn call other functions within the program. The main function may be defined such as
+	  In which we specify a pattern rule that compiles an arbitrary target object file from a given arbitrary .c file as prerequisite. This is a less general example of the built in 
+	  make pattern rule specified as
+	  
+		%.o : %.c
+		$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 		
-		int main() {...} /* no arguments to main */
-		int main(void) {...} /* no arguments to main */
-		int main(int argc, char *argv[]) {...} /* arguments in the array-of-arrays argv */
-		int main(int argc, char **argv) {...} /* the same as above */
-
-- What is compilation and linking (of a C-program)? What is source code, object code, executable code?
-
-	¤ The program is initially written as C, which is a low-level abstraction relative to the machine. In order for the computer to understand the program
-	  it needs to be 'translated' into the CPU language. The compiler does this for us. In doing so, an object is created. This object may then be linked
-	  with all the necessary libraries, or other dependencies (needed programs), creating an executable (historically a.out as default), that may then be 
-	  run from the terminal by ./a.out. Source code is the initial .c file, which during compilation is translated into object code. After all necessary
-	  programs needed have been compiled into object code, these may be linked to form an executable.
-
-- How can you compile and link a C-program which is wholly contained in one file, say hello.c? How do you run the resulting executable code?
-
-	¤ This can actually be done in one step wholly, since the pre-processing stage inserts any headers and libraries included with #include ""/<>. For 
-	  the present example we may simply specify to the command line
+	  In which we see usage of the above variables in question. We use automatic variables;
 		
-		gcc hello.c
-	
-	  Which will link and compile the program to the (default) name 'a.out'. Having instead included '-c' would've omitted the linking stage. We could also
-	  have specified '-o somename' to name the program (executable) 'somename' instead. We can run this executable as
-
-		./a.out
-
-- How do you supply the compiler with the description of the printf function? Why do you need to do this? How do you link the printf function?
-
-	¤ The 'printf()' function is contained in the header "stdio.h" which may be included by
-
-		#include <stdio.h> 
-	  or
-		#include "stdio.h"
-
-	  This will let the preprocessing stage of compilation insert the needed header file ('stdio.h') into the beginning of the program. This is necessary in order
-	  to refer to the correct libraries in which the standard C library functions have been implemented. 'stdio.h' is simply the standard input-output stream
-	  library according to the current C standard. When only using this library we do not need to link. The only standard library we need to link is the 'math.h'
-	  header file. This is for historical reasons and is done by usage of the compiler flag '-lm' during linking of the object files. The 'hello.c' program from
-	  the last question is exactly an example such as this case.
-
-- What is stdio.h? Why angle-brackets in #include<stdio.h>? Hint: C preprocessor: including files.
-
-	¤ I have already elaborated on this. Ordinarily, in fact i think it is by convention, we use <...> for standard libraries, but "..." for our own implementations
-	  of source header files. Again, we must include it in order to  use the function implementations contained therein.
-
-- How can you get the manual page of the C standard library function printf? Hint: there is also a utility printf in a POSIX system and man printf will show you the manual page for the printf utility, not the printf function from the C standard library.
-
-	¤ This can be achieved simply by
+		$@: Is the filename of the target of the rule. Hence if there are multiple targets to a rule, then this variable is the name of the given target that causes the rule to be executed. 
 		
-		man stdio
-
-	  which will display the C89 conforming documentation of stdio.h. Therein are listed, all the implemented methods belonging to that library, 
-	  and a description of the I/O stream. printf from stdio is the third printf found on the linux system, so to find its man page we should type
+		$<: The name of the first prerequisite. In the present case it represents the given .c file.
 		
-		man printf.3
-
-	  The complete list of printf man pages can be seen by
-
-		man -k printf
-
-	  From which it is seen which one we should read from. 
-
-- What are the built-in data types for numbers in the C-language?
-
-	¤ The built in datatypes are
-
-		type	Minimum size in bits	format specifier
-
-		char	8			%c
-		int	16 (32 for long)	%i or %d
-		float	32			%f or %g usually (more on wiki)
-		double	64 (128 for long)	%lf or %lg usually...
-		long	32
+		$^: The names of all the prerequisites with spaces between them. This could have been used in place of $< i guess, if we have more prerequisites. 
 		
-	  The last three can be included with prefix unsigned, short, long or long long - _____.
+	  CFLAGS, LDFLAGS, LDLIBS are examples of variables used by implicit Rules. CFLAGS specifies which flags to use during usage of the implicit compilation rule of say compiling a .c file. 
+	  LDFLAGS are extra compile flags to specify to the compiler when invoking the linker 'ld', while LDLIBS are library flags in the same stage.
+		
 		
 
-- What is the result of the operation 1/2 in C?
+- What will the following makefile print (after running command make) and why,
 
-	¤ This is integer division, so it will be rounded down to zero.
+    CFLAGS = -Wall -Ofast -std=c1x
+    C = F
+    all:
+    	echo CFLAGS
+    	echo $CFLAGS
+    	echo $(C)FLAGS
+    	echo $(CFLAGS)
+    	
+    	¤ Here we redefine the $CFLAGS implicit rule variable, to include '-Wall' for full warning coverage (specify all warnings and errors), '-Ofast' to optimize fully, 
+    	  and '-std=c1x' to specify a given c compilation standard. Here i guess '1x' is placeholder for '11' or '17' for example. The makefile only has one target, 'all' which uses 'echo'
+    	  to print four statements to the terminal. When run we get the output
+    	  
+    	  CFLAGS   			--> 	Since we simply echo the string 'CLFAGS'
+    	  FFLAGS   			--> 	Since $CFLAGS is interpreted as printing the variable $C = F and then the string 'FLAGS'
+    	  FFLAGS  			--> 	Since $(C) and $C is the same, as variable referencing is the same if the variable only has one character in its name. This naturally leads to conflicts
+    	  -Wall -Ofast -std=c1x	--> 	Since we are now successfully referencing the CFLAGS variable
 
-- In order to use the C mathematical functions, do you need to include any header files? Link any library? Hint: man sin.
 
-	¤ Yes we do, we need to #include <math.h> and link with '-lm'
 
-- What is tgmath.h? If you use tgmath.h do you need to link any library? 
+- Suppose you have your whole C-program in one file main.c. Which of the following makefiles will compile and link the program into the executable file main?
 
-	¤ tg stands for type-generic. It is a header that both includes 'math.h' and 'complex.h', hence it contains the same functions as 'math.h', but which
-	  can take other non-floating point values. Every function in <math.h> that takes at least one double as argument (except modf) is defined in <tgmath.h> 
-	  as a macro with the same semantics but taking generic parameters instead: Each of the arguments provided for these generic parameters that is of an integer type is 
-	  casted to a double; Arguments of floating-point types are used without transformation (directly as float, double or long double). This header automatically includes <math.h> 
-	  and <complex.h>: The type-generic function can also take complex values if the function exists in <complex.h> (prefixed with a "c" character).
+        all: main
 
-######################################################################################################################
+        main: main.c
+
+        main: main.o
+
+        all: main
+        main: main.o
+        main.o: main.c
+
+        all: main
+        main.o: main.c
+        main: main.o
+
+        main.o: main.c
+        all: main
+        main: main.o
+
+        main: main.c
+        	cc main.c -o main
+
+        main: main.c
+        	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+        all: main
+        main: main.o
+        	cc main.o -o main
+        main.o: main.c
+        	cc -c main.c -o main.o
+        	
+        	¤ The first two, the fourth and fifth will create an executable by usage of implicit rules. The ordering inn the fifth doesn't really matter since we don't need the specification
+        	  of an explicit rule to compile here. The second will only create an object by using implicit rules, while the sixth will not create an executable since the ordering doesn't 
+        	  allow for the executable to have any dependencies on it. Seventh and eigth will compile and create an executable since we compile an link in one step, the latter using the 
+        	  implicit variables, and redundant automatic variables. Here $@ will just give the '-o' outputname flag the target as a name, which in this case is simply main. The last makefile 
+        	  option also works. This is a classic makefile such as my general makefile.
+
+    Remember that the tabulator-sign before the command may not be copy-pasted correctly. 

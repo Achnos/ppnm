@@ -34,10 +34,10 @@
 int main(){
   double complex gamma    =  tgamma(5);
   double complex bessel   =  j1(0.5);
-  double complex sqrtm2   =  sqrt(-2);
-  double complex ePowI    =  exp(I);
-  double complex ePowIPi  =  exp(I * M_PI);
-  double complex iPowE    =  pow(I, M_E);
+  double complex sqrtm2   =  csqrt(-2);
+  double complex ePowI    =  cexp(I);
+  double complex ePowIPi  =  cexp(I * M_PI);
+  double complex iPowE    =  cpow(I, M_E);
 
   printf("Gamma(5) \t is equal to %g + %gi \n", crealf(gamma)  , cimagf(gamma)  );
   printf("J_1(5)   \t is equal to %g + %gi \n", crealf(bessel) , cimagf(bessel) );
@@ -46,11 +46,11 @@ int main(){
   printf("e^{i*pi} \t is equal to %g + %gi \n", crealf(ePowIPi), cimagf(ePowIPi));
   printf("i^{e}    \t is equal to %g + %gi \n", crealf(iPowE)  , cimagf(iPowE)  );
 
-  printf( "\nFind out how many significant digits variables of types float, double, and long double can hold in them by trying to store the number 0.1111111111111111111111111111 \n\n");
+  printf( "\nFind out how many significant digits variables of types float, double, and long double can hold in them by calculating the ratio 1/9 with the corresponding precision and then printing out the result.\n\n");
 
-       float  xf   =  0.1111111111111111111111111111  ;
-       double xd   =  0.1111111111111111111111111111  ;
-  long double xld  =  0.1111111111111111111111111111L ;
+       float  xf   =  1.f/9 ;
+       double xd   =  1./9  ;
+  long double xld  =  1.L/9 ;
 
   printf("Float:       %.25g  \n", xf  );
   printf("Double:      %.25lg \n", xd  );
