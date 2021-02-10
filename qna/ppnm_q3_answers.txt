@@ -54,8 +54,8 @@ Questions 2
 
 - What is stdio.h? Why angle-brackets in #include<stdio.h>? Hint: C preprocessor: including files.
 
-	¤ I have already elaborated on this. Ordinarily, in fact i think it is by convention, we use <...> for standard libraries, but "..." for our own implementations
-	  of source header files. Again, we must include it in order to  use the function implementations contained therein.
+	¤ I have already elaborated on this. The angular brackets tells the preprocessor to look for the inclusion files in the default search path, 
+	  while " " will include the current working directory as well. This is useful if we write our own header files.  
 
 - How can you get the manual page of the C standard library function printf? Hint: there is also a utility printf in a POSIX system and man printf will show you the manual page for the printf utility, not the printf function from the C standard library.
 
