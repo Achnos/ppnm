@@ -4,6 +4,7 @@ Sqrt(-2) 	 is equal to 0 + 1.41421i
 e^{i}    	 is equal to 0.540302 + 0.841471i 
 e^{i*pi} 	 is equal to -1 + 1.22465e-16i 
 i^{e}    	 is equal to -0.42822 + -0.903675i 
+i^{i}    	 is equal to 0.20788 + -0.903675i 
 
 Find out how many significant digits variables of types float, double, and long double can hold in them by calculating the ratio 1/9 with the corresponding precision and then printing out the result.
 

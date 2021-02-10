@@ -38,6 +38,7 @@ int main(){
   double complex ePowI    =  cexp(I);
   double complex ePowIPi  =  cexp(I * M_PI);
   double complex iPowE    =  cpow(I, M_E);
+  double complex iPowI    =  cpow(I, I);
 
   printf("Gamma(5) \t is equal to %g + %gi \n", crealf(gamma)  , cimagf(gamma)  );
   printf("J_1(5)   \t is equal to %g + %gi \n", crealf(bessel) , cimagf(bessel) );
@@ -45,6 +46,7 @@ int main(){
   printf("e^{i}    \t is equal to %g + %gi \n", crealf(ePowI)  , cimagf(ePowI)  );
   printf("e^{i*pi} \t is equal to %g + %gi \n", crealf(ePowIPi), cimagf(ePowIPi));
   printf("i^{e}    \t is equal to %g + %gi \n", crealf(iPowE)  , cimagf(iPowE)  );
+  printf("i^{i}    \t is equal to %g + %gi \n", crealf(iPowI)  , cimagf(iPowE)  );
 
   printf( "\nFind out how many significant digits variables of types float, double, and long double can hold in them by calculating the ratio 1/9 with the corresponding precision and then printing out the result.\n\n");
 
