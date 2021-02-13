@@ -3,24 +3,7 @@
 #include <assert.h>
 #include <limits.h>
 #include <float.h>
-#include "diffClock.h"
-#include "equal.h"
-
-void name_digit( int dig ){
-  switch (dig) {
-    case 0:  printf("zero.        \n"); break;
-    case 1:  printf("one.         \n"); break;
-    case 2:  printf("two.         \n"); break;
-    case 3:  printf("three.       \n"); break;
-    case 4:  printf("four.        \n"); break;
-    case 5:  printf("five.        \n"); break;
-    case 6:  printf("six.         \n"); break;
-    case 7:  printf("seven.       \n"); break;
-    case 8:  printf("eight.       \n"); break;
-    case 9:  printf("nine.        \n"); break;
-    default: printf("Not a digit. \n");
-  }
-}
+#include "funcs.h"
 
 int main(){
 
@@ -161,17 +144,25 @@ int main(){
 
   printf("Sum_up_double = %f.\nSum_down_double = %f.\n", sum_up_double, sum_down_double);
 
-  /*
+
   // 3. ------------------------------------------------------------------------
-  printf("\n3) Int equal function.\n\nThe function must be placed in a separate .c file, compiled separately and then linked to the final executable. SEE THE EPSILON MATH ASSIGNMENT! It is already written...  ;)\n");
+  printf("\n3) Int equal function.\n");
+  printf("---------------------------------------------- \n\n");
+
+  printf("\nI implemented the function, and i guess it works. \nNot sure what else to do with this assignment...\n ");
 
   // 4. ------------------------------------------------------------------------
-  int *digit;
+  int digit;
   printf("\n4) Name the digit.\n");
-  printf("Please input your digit: ");
+  printf("---------------------------------------------- \n\n");
+  printf("Please input your digit: \n");
 
-  scanf("%i", digit);
-  name_digit(&digit);
-  */
+  if (scanf("%d", &digit) == 1) {
+    printf("Your digit was ");
+    name_digit(digit);
+  } else {
+    printf("Failed to read integer.\n");
+  }
+
   return 0;
 }

@@ -24,14 +24,16 @@ LDFLAGS  =  -lm
 #.PHONEY: default
 #	default : target1 target2 target3
 
+OBJECTS =  epsilon.o diffClock.o equal.o nameDigit.o
+
 default : out.txt
 	cat out.txt
 
 out.txt : epsilon                 # epsilon.txt depends on epsilon
-	./$< > $@       # this is how you make out.txt from epsilon
+	./$< > $@       # PLEASE INPUT A DIGIT:
               		       # This target basically runs the program and sends it into a .txt file called out.txt
 
-epsilon : epsilon.o diffClock.o equal.o # epsilon depends on epsilon.o
+epsilon : $(OBJECTS) # epsilon depends on epsilon.o
 	$(CC) $? -o $@ $(LDFLAGS)     				# Now we link the object file to an output program ('-o') called epsilon.
 
 .PHONEY: clean
