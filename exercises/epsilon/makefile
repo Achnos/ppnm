@@ -31,12 +31,9 @@ out.txt : epsilon                 # epsilon.txt depends on epsilon
 	./$< > $@       # this is how you make out.txt from epsilon
               		       # This target basically runs the program and sends it into a .txt file called out.txt
 
-epsilon : epsilon.o       	       		# epsilon depends on epsilon.o
-	$(CC) $< -o $@ $(LDFLAGS)    # Now we link the object file to an output program ('-o') called epsilon.
-
-epsilon.o : epsilon.c      	       # epsilon.o depends on epsilon.c
-	$(CC) -c $< $(CFLAGS)         # '-c' flag means compile only and do not link.
+epsilon : epsilon.o diffClock.o equal.o # epsilon depends on epsilon.o
+	$(CC) $? -o $@ $(LDFLAGS)     				# Now we link the object file to an output program ('-o') called epsilon.
 
 .PHONEY: clean
 clean:                 	       # this is "clean" target it does not depend on anything
-	rm -f out.txt epsilon epsilon.o
+	rm -f out.txt epsilon epsilon.o diffClock.o

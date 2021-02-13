@@ -3,22 +3,8 @@
 #include <assert.h>
 #include <limits.h>
 #include <float.h>
-#include <time.h>
-
-double diffclock(clock_t clock1, clock_t clock2)
-{
-    double diffticks = clock1 - clock2;
-    double diffms = (diffticks * 10) / CLOCKS_PER_SEC;
-    return diffms;
-}
-
-int equal(double a, double b, double tau, double epsilon){
-  // This function must be placed in a separate .c file, compiled separately and then linked to the final executable.
-  if ( (fabs( a - b ) < tau) || ((fabs( a - b ) / ( fabs(a) + fabs(b) )) < (epsilon / 2)) ) {
-    return 1;
-  }
-  else {return 0; }
-}
+#include "diffClock.h"
+#include "equal.h"
 
 void name_digit( int dig ){
   switch (dig) {
@@ -42,66 +28,89 @@ int main(){
   clock_t end   = clock();
 
   // Exercise epsilon.
+  printf("\n-- Exercise epsilon -- \n");
 
 
   // 1.  INT_MAX -------------------------------------------------------------------
   printf("\ni. INT_MAX.\n");
+  printf("---------------------------------------------- \n\n");
   begin = clock();
 
   int i = 1;
   while( i + 1 > i ) {
       i++;
   }
-  /*
+  printf("Done! Elapsed time (while loop)    = %g ms \n", (double)(diffClock(end, begin)) );
+
   i = 1;
   for (; i < i + 1; i++ ){
       ;
   }
+  printf("Done! Elapsed time (for loop)      = %g ms \n", (double)(diffClock(end, begin)) );
 
   i = 1;
   do {
       i++;
   } while ( i + 1 > i );
-  */
+  printf("Done! Elapsed time (do-while loop) = %g ms \n", (double)(diffClock(end, begin)) );
+
   end = clock();
 
-  printf("Done! Elapsed time     = %g      ms \n", (double)(diffclock(end, begin)) );
-  printf("My max int             = %i         \n", i           );
+  printf("\nMy max int             = %i         \n", i         );
   printf("The standard limit is  = %i         \n", INT_MAX     );
   printf("They differ by         = %i         \n", INT_MAX - i );
 
-  return 0;
   // INT_MIN -------------------------------------------------------------------
-  printf("ii. INT_MIN.\n");
+  printf("\nii. INT_MIN.\n");
+  printf("---------------------------------------------- \n\n");
   begin = clock();
 
   i = 1;
-  while( i - 1 < i ) { i--; }
+  while( i - 1 < i ) {
+    i--;
+  }
+  printf("Done! Elapsed time (while loop)    = %g ms \n", (double)(diffClock(end, begin)) );
+
   i = 1;
-  for (; i - 1 < i; i-- ){ ; }
+  for (; i - 1 < i; i-- ){
+    ;
+  }
+  printf("Done! Elapsed time (for loop)      = %g ms \n", (double)(diffClock(end, begin)) );
+
   i = 1;
-  do { i-- ; } while ( i - 1 < i);
+  do {
+    i--;
+  } while ( i - 1 < i);
+  printf("Done! Elapsed time (do-while loop) = %g ms \n", (double)(diffClock(end, begin)) );
 
   end = clock();
 
-  printf("My min int = %i\n",i);
-  printf("The standard limit is = %i\n",INT_MIN);
 
-  printf("Done! Elapsed time: %g ms", (double)(diffclock(end, begin)) );
+  printf("\nMy min int             = %i         \n", i         );
+  printf("The standard limit is  = %i         \n", INT_MIN     );
+  printf("They differ by         = %i         \n", INT_MIN - i );
 
   // iii. The machine epsilon --------------------------------------------------
-  printf("iii. The machine epsilon.\n");
-  begin = clock();
+  printf("\niii. The machine epsilon.\n");
+  printf("---------------------------------------------- \n\n");
 
   float f = 1;
-  while(  1 + f  != 1 ){  f /= 2;  }
-  f  *= 2;
+  while( 1 + f != 1 ){
+    f /= 2;
+  }
+  f *= 2;
+
   f = 1;
-  for  (; 1 + f  != 1;    f /= 2){;}
-  f  *= 2;
+  for  (; 1 + f != 1; f /= 2){
+    ;
+  }
+  f *= 2;
+
   f = 1;
-  do { f /= 2; } while ( 1 + f != 1  );
-  f  *= 2;
+  do {
+    f /= 2;
+  } while ( 1 + f != 1  );
+  f *= 2;
 
   double d = 1;
   while(  1 + d  != 1 ){  d /= 2;  }
@@ -123,43 +132,36 @@ int main(){
   do{ ld /= 2; } while ( 1 + ld != 1 );
   ld *= 2;
 
-  printf("Calculated epsilon for floats, doubles and long doubles are = %.10f, %g, %Lg. \n", f, d, ld);
+  printf("Calculated epsilon for floats, doubles and long doubles are = %.20f, %.20g, %.20Lg. \n", f, d, ld);
   printf("The actual values are %.10f, %g and %Lg. \n", FLT_EPSILON, DBL_EPSILON, LDBL_EPSILON);
-
-  end = clock();
-  printf("Elapsed time: %g ms\n", (double)(diffclock(end, begin)) );
 
   // 2. ------------------------------------------------------------------------
 
   printf("\n2) Sum_up/down.\n");
-  int max = INT_MAX / 2;
+  printf("---------------------------------------------- \n\n");
 
-  begin = clock();
+  int max = INT_MAX / 2;
 
   float sum_up_float   = 0;
   float sum_down_float = 0;
 
-  for (int i = 1; i <= max; i++ ) { sum_up_float   += 1.0f / i;           }
+  for (int i = 1; i <= max; i++ ) { sum_up_float   += 1.0f / i;         }
   for (int i = 0; i <  max; i++ ) { sum_down_float += 1.0f / (max - i); }
 
-  end = clock();
 
   printf("Sum_up_float = %f.\nSum_down_float = %f.\n", sum_up_float, sum_down_float);
-  printf("Elapsed time: %g ms\n", (double)(diffclock(end, begin)) );
 
-  begin = clock();
 
   double sum_up_double   = 0;
   double sum_down_double = 0;
 
-  for (int i = 1; i <= max; i++ ) { sum_up_double   += 1.0 / i;           }
+  for (int i = 1; i <= max; i++ ) { sum_up_double   += 1.0 / i;         }
   for (int i = 0; i <  max; i++ ) { sum_down_double += 1.0 / (max - i); }
 
-  end = clock();
 
   printf("Sum_up_double = %f.\nSum_down_double = %f.\n", sum_up_double, sum_down_double);
-  printf("Elapsed time: %g ms\n", (double)(diffclock(end, begin)) );
 
+  /*
   // 3. ------------------------------------------------------------------------
   printf("\n3) Int equal function.\n\nThe function must be placed in a separate .c file, compiled separately and then linked to the final executable. SEE THE EPSILON MATH ASSIGNMENT! It is already written...  ;)\n");
 
@@ -167,8 +169,9 @@ int main(){
   int *digit;
   printf("\n4) Name the digit.\n");
   printf("Please input your digit: ");
-  //scanf("%i", digit);
-  name_digit(*digit);
 
+  scanf("%i", digit);
+  name_digit(&digit);
+  */
   return 0;
 }

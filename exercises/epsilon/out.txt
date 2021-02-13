@@ -1,6 +1,38 @@
 
+-- Exercise epsilon -- 
+
 i. INT_MAX.
-Done! Elapsed time     = 17.049      ms 
+---------------------------------------------- 
+
+Done! Elapsed time (while loop)    = -0.0001 ms 
+Done! Elapsed time (for loop)      = -0.0001 ms 
+Done! Elapsed time (do-while loop) = -0.0001 ms 
+
 My max int             = 2147483647         
 The standard limit is  = 2147483647         
 They differ by         = 0         
+
+ii. INT_MIN.
+---------------------------------------------- 
+
+Done! Elapsed time (while loop)    = -4e-05 ms 
+Done! Elapsed time (for loop)      = -4e-05 ms 
+Done! Elapsed time (do-while loop) = -4e-05 ms 
+
+My min int             = -2147483648         
+The standard limit is  = -2147483648         
+They differ by         = 0         
+
+iii. The machine epsilon.
+---------------------------------------------- 
+
+Calculated epsilon for floats, doubles and long doubles are = 0.00000000000000000000, 0, 0. 
+The actual values are 0.0000001192, 2.22045e-16 and 1.0842e-19. 
+
+2) Sum_up/down.
+---------------------------------------------- 
+
+Sum_up_float = 16.419670.
+Sum_down_float = 20.194206.
+Sum_up_double = 21.371631.
+Sum_down_double = 21.371631.

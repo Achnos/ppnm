@@ -60,12 +60,12 @@ $(OUTPUTFILE) : $(PROGRAM)                  # someoutput.txt depends on someprog
 
 
 $(PROGRAM) : $(OBJECTS)     	      			  # Someprogram depends on someobject.o
-	$(CC) $(OBJECTS) -o $(PROGRAM) $(CFLAGS)  # Now we link the object file, someobject.o to an output program ('-o') called someprogram.
+	$(CC) $(OBJECTS) -o $(PROGRAM)   				  # Now we link the object file, someobject.o to an output program ('-o') called someprogram.
 																						# This is how you make someprogram from someobject.o
 
 
 $(OBJECTS) : $(FILES)          							# someobject.o depends on somefile.c
-	$(CC) -c $(FILES) -o $(OBJECTS) 					# '-c' flag means compile only and do not link. This is how you make the object file someobject.o from somefile.c
+	$(CC) -c $(FILES) $(CFLAGS) -o $(OBJECTS) # '-c' flag means compile only and do not link. This is how you make the object file someobject.o from somefile.c
 
 
 .PHONEY: clean
