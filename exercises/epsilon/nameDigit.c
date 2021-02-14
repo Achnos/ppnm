@@ -2,9 +2,8 @@
 // Implemented by Marc B. Sørensen on 2/13/21.
 //
 
-#ifndef EPSILON_NAMEDIGIT_C
-#define EPSILON_NAMEDIGIT_C
 #include <stdio.h>
+#include "funcs.h"
 
 void name_digit( int dig ){
   switch (dig) {
@@ -21,5 +20,3 @@ void name_digit( int dig ){
     default: printf("Not a digit. \n");
   }
 }
-
-#endif //EPSILON_NAMEDIGIT_H

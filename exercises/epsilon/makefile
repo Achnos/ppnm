@@ -24,7 +24,7 @@ LDFLAGS  =  -lm
 #.PHONEY: default
 #	default : target1 target2 target3
 
-OBJECTS =  epsilon.o diffClock.o equal.o nameDigit.o
+OBJECTS =  epsilon.o diffClock.o equal.o nameDigit.o funcs.h
 
 default : out.txt
 	cat out.txt
@@ -34,8 +34,8 @@ out.txt : epsilon                 # epsilon.txt depends on epsilon
               		       # This target basically runs the program and sends it into a .txt file called out.txt
 
 epsilon : $(OBJECTS) # epsilon depends on epsilon.o
-	$(CC) $? -o $@ $(LDFLAGS)     				# Now we link the object file to an output program ('-o') called epsilon.
+	$(CC) $^ -o $@ $(LDFLAGS)     				# Now we link the object file to an output program ('-o') called epsilon.
 
 .PHONEY: clean
 clean:                 	       # this is "clean" target it does not depend on anything
-	rm -f out.txt epsilon epsilon.o diffClock.o
+	rm -f out.txt epsilon $(OBJECTS)
