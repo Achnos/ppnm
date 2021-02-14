@@ -4,7 +4,7 @@
 #include "komplex.h"
 
 void komplex_print (char *s, komplex a) {
-	printf ("%s (%g,%g)\n", s, a.re, a.im);
+	printf ("%s (%g,%g)\n", *s, a.re, a.im);
 }
 
 void komplex_set (komplex* z, double x, double y) {
@@ -44,20 +44,36 @@ komplex komplex_mul (komplex a, komplex b) {
 	komplex result = { a.re * b.re + a.im * b.im, a.im * b.re + a.re * b.im };
 	return result;
 }
-/*
+
 komplex komplex_div (komplex a, komplex b){
-	komplex result = { a.re * b.re + a.im * b.im, a.im * b.re + a.re * b.im };
+	komplex result = { (a.re*b.re + a.im*b.im)/(b.re*b.re + b.im*b.im), (a.im*b.re - a.re*b.im)/(b.re*b.re + b.im*b.im)};
 	return result;
 }
-*/
+
 komplex komplex_conjugate(komplex z){
 	z.im = -(z.im);
 	return z;
 }
+
+double  komplex_abs      (komplex z){
+	double abs = sqrt(z.re*z.re + z.im*z.im);
+	return abs;
+}
 /*
-double  komplex_abs      (komplex z){}
-komplex komplex_exp      (komplex z){}
+komplex komplex_exp      (komplex z){
+	komplex kexp;
+	double sum;
+	for (int n = 0; n < INT_MAX; n++){
+		unsigned long long fact = 1;
+		for (i = 1; i <= n; ++i) { // find n!
+            fact *= i;
+        }
+		sum += (1/fact)*
+	}
+	return kexp;
+}
+
 komplex komplex_sin      (komplex z){}
 komplex komplex_cos      (komplex z){}
-komplex komplex_sqrt     (komplex z){}
 */
+komplex komplex_sqrt     (komplex z){}
