@@ -47,27 +47,28 @@ LDLIBS 			=  -lm 			# libraries to link
 FILES       =  somefile.c
 OBJECTS     =  someobject.o
 OUTPUTFILE  =  someoutput.txt
+ERRFILE			=  errors.txt
 PROGRAM     =  someprogram
 DISPLAY     =  cat
 
 
-default: $(OUTPUTFILE)									  	# default target is to make out.txt
-	$(DISPLAY) $(OUTPUTFILE) 									# show out.txt on the screen
+default: $(OUTPUTFILE)									  		# default target is to make out.txt
+	$(DISPLAY) $(OUTPUTFILE) 										# show out.txt on the screen
 
-$(OUTPUTFILE) : $(PROGRAM)                  # someoutput.txt depends on someprogram
-	./$(PROGRAM) > $(OUTPUTFILE)  						# Generate someoutput.txt and send the terminal output of someprogram into it.
-			        	 														# This target basically runs the program and sends it into a .txt file called someoutput.txt
-
-
-$(PROGRAM) : $(OBJECTS)     	      			  # Someprogram depends on someobject.o
-	$(CC) $(OBJECTS) -o $(PROGRAM)   				  # Now we link the object file, someobject.o to an output program ('-o') called someprogram.
-																						# This is how you make someprogram from someobject.o
+$(OUTPUTFILE) : $(PROGRAM)                  	# someoutput.txt depends on someprogram
+	./$(PROGRAM) 1> $(OUTPUTFILE) 2> $(ERRFILE)	# Generate someoutput.txt and send the terminal output of someprogram into it.
+			        	 															# This target basically runs the program and sends it into a .txt file called someoutput.txt
 
 
-$(OBJECTS) : $(FILES)          							# someobject.o depends on somefile.c
-	$(CC) -c $(FILES) $(CFLAGS) -o $(OBJECTS) # '-c' flag means compile only and do not link. This is how you make the object file someobject.o from somefile.c
+$(PROGRAM) : $(OBJECTS)     	      			  	# Someprogram depends on someobject.o
+	$(CC) $(OBJECTS) -o $(PROGRAM)   				  	# Now we link the object file, someobject.o to an output program ('-o') called someprogram.
+																							# This is how you make someprogram from someobject.o
+
+
+$(OBJECTS) : $(FILES)          								# someobject.o depends on somefile.c
+	$(CC) -c $(FILES) $(CFLAGS) -o $(OBJECTS) 	# '-c' flag means compile only and do not link. This is how you make the object file someobject.o from somefile.c
 
 
 .PHONEY: clean
-clean:                 	      		 	  			# This is "clean" target it does not depend on anything
-	rm -f $(OUTPUTFILE) $(OBJECTS) $(PROGRAM) # This target functions as expected, it cleans up the directory of program files.
+clean:                 	      		 	  				# This is "clean" target it does not depend on anything
+	rm -f $(OUTPUTFILE) $(OBJECTS) $(PROGRAM) 	# This target functions as expected, it cleans up the directory of program files.

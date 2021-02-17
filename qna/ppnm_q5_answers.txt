@@ -1,0 +1,112 @@
+------ Praktisk Programmering og Numeriske Metoder Answers ------
+
+######################################################################################################################
+# ------------------------------------------------------------------------------------------------------------------ #
+# -------------------------------------------------- Questions 5 --------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------ #
+######################################################################################################################
+
+Questions 5 "stdio"
+
+- What are standard input, standard output and standard error in the context of POSIX programming?
+    Hints: apropos standard | grep streams; man stdin; Wikipedia: standard streams.
+    
+	¤ These are so called 'streams'. A stream is a sequence of bits processed by the computer. These streams are what allow the program to communicate
+	  with the rest of the POSIX system. There are three default streams; stdout - standard output, stdin - standard input and finally 
+	  stderr - standard error. We may in fact define any stream we like. An example of a user defined stream coul be of the FILE* type, allowing us to 
+	  write to files from our C program.
+
+- What is EOF in the context of scanf?
+    Hints: man scanf and search for EOF; wikipedia "end of file".
+    
+	¤ EOF means 'end of file'. It is the value returned if scanf() reaches the end of its input, or if a read error occurs. We usually check for the 
+	  EOF return value to know when to stop reading from the stdin stream.
+
+- Where to does the function printf write?
+    
+	¤ printf() writes, by default, to the stdout stream. It is completely analogous to using
+		
+		fprintf(stdout, "Some string", /* variable list*/);
+
+- Where from does the function scanf read?
+    
+	¤ scanf() reads from the stdin stream.
+
+- How do you redirect the standard output of a program to a file?
+    
+	¤ An example of such a redirection could be, in our makefile, using 
+	
+		./program 1> out.txt 2> errors.txt
+		
+	  In which the program output is redirected via stdout (1> means redirect via stdout), into a file named out.txt, and any errors into a file named
+	  errors.txt (2> means redirect via the stderr stream). 
+	  
+	  In fact; the operator '>' more precisely means 'delete the inputs of the file to the right, and replace by whatever is output by the program to
+	  the left. We could instead have used the operator '>>' which instead appends to the file (that is, it adds more lines at the end of the original
+	  file, instead of deleting the entire contents).
+
+- How do you send the content of a file into a program's standard input?
+    
+	¤ This can be done using
+	
+		./program < input.txt
+		
+	  where '<' means redirect from the file named input.txt into the program 'program'.
+
+- How do you connect the standard output of a program to the standard input of another program?
+    Hint: GNU make manual: automatic variables, implicit variables, implicit rules.
+    
+	¤ In this case we could use piping to shorten the naive statement
+	
+		./program1 1> temp.txt
+		./program2  < temp.txt
+		
+		into
+		
+		./program1 | ./program2 
+
+- Suppose your main function, contained in the file main.c, calls the functions foo and bar which are contained correspondingly in the files foo.c and bar.c. Which of the following makefiles will correctly compile and link your program into the executable file main after the command make?
+
+        main: main.o foo.o bar.o
+
+        main: foo.o main.o bar.o
+
+        main: foo.o main.o bar.o
+        	cc foo.o main.o bar.o -o main
+
+        main: main.o foo.o bar.o
+        	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+        main: main.o foo.o bar.o
+        main.o: main.c
+        foo.o: foo.c
+        	cc -c $^ -o $@
+        bar.o: bar.c
+
+        main: main.o foo.o bar.o
+        	cc main.o foo.o bar.o -lm -o main
+        main.o: main.c
+        	cc -c main.c
+        foo.o: foo.c
+        	cc -c foo.c
+        bar.o: bar.c
+        	cc -c bar.c
+
+        obj = main.o foo.o bar.o
+        main: $(obj)
+    
+	¤ The first two will work by implicit rules. The same goes for the fourth. It is unclear from the given information whether or not the third line will work.
+	  This depends on which libraries must be linked. If no math libraries, then this should work. The fifth, sixth, and seventh will work as well. The last will also.
+
+- Suppose there is the following preprocessor directive at the beginning of the file,
+
+    #define PI 3.1415927
+
+    what is the effect of it?
+        - The compiler creates a variable PI of type double and stores the value 3.1415927 in it.
+        - All occurences of the token 'PI' in the file are substituted with the token '3.1415927'. 
+    
+	¤ The latter will be true, since it is a preprocessor statement.
+
+
+######################################################################################################################

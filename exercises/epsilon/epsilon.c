@@ -5,6 +5,14 @@
 #include <float.h>
 #include "funcs.h"
 
+void printDashes(){
+  /*
+  Prints a series of dashes to obtain separation in the output.
+  */
+  printf("---------------------------------------------- \n\n");
+}
+
+
 int main(){
 
   clock_t begin = clock(); // We define variables to hold the times used for timing the computations.
@@ -16,7 +24,7 @@ int main(){
 
   // 1.  INT_MAX -------------------------------------------------------------------
   printf("\ni. INT_MAX.\n");
-  printf("---------------------------------------------- \n\n");
+  printDashes()
   begin = clock(); // Begin timing
 
   // We compute the INT_MAX using the while-loop
@@ -49,7 +57,7 @@ int main(){
 
   // INT_MIN -------------------------------------------------------------------
   printf("\nii. INT_MIN.\n");
-  printf("---------------------------------------------- \n\n");
+  printDashes()
   begin = clock();
 
   // Now we'll do the same for INT_MIN, using the three methods again, once again timing.
@@ -80,7 +88,7 @@ int main(){
 
   // iii. The machine epsilon --------------------------------------------------
   printf("\niii. The machine epsilon.\n");
-  printf("---------------------------------------------- \n\n");
+  printDashes()
   // IT APPEARS THAT THE OPTIMIZATION SCHEME -OFAST WILL CAUSE THE COMPUTATIONS OF EPSILONS BELOW
   // TO BE BROKEN, SINCE WE WILL EVALUATE f!=0 INSTEAD, AND GET INFINITE PRECISION.
 
@@ -158,7 +166,7 @@ int main(){
   // 2. ------------------------------------------------------------------------
 
   printf("\n2) Sum_up/down.\n");
-  printf("---------------------------------------------- \n\n");
+  printDashes()
 
   int max = INT_MAX / 2;
 
@@ -198,14 +206,14 @@ int main(){
 
   // 3. ------------------------------------------------------------------------
   printf("\n3) Int equal function.\n");
-  printf("---------------------------------------------- \n\n");
+  printDashes()
 
   printf("\nI implemented the function, and i guess it works. \nNot sure what else to do with this assignment...\n ");
 
   // 4. ------------------------------------------------------------------------
   int digit;
   printf("\n4) Name the digit.\n");
-  printf("---------------------------------------------- \n\n");
+  printDashes()
   printf("Please input your digit: \n");
 
   if (scanf("%d", &digit) == 1) {
