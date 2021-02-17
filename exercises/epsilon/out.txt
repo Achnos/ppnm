@@ -1,0 +1,74 @@
+
+-- Exercise epsilon -- 
+
+i. INT_MAX.
+---------------------------------------------- 
+
+Done! Elapsed time (while loop)    = -9e-05 ms 
+Done! Elapsed time (for loop)      = -9e-05 ms 
+Done! Elapsed time (do-while loop) = -9e-05 ms 
+
+My max int             = 2147483647         
+The standard limit is  = 2147483647         
+They differ by         = 0         
+
+ii. INT_MIN.
+---------------------------------------------- 
+
+Done! Elapsed time (while loop)    = -3e-05 ms 
+Done! Elapsed time (for loop)      = -3e-05 ms 
+Done! Elapsed time (do-while loop) = -3e-05 ms 
+
+My min int             = -2147483648         
+The standard limit is  = -2147483648         
+They differ by         = 0         
+
+iii. The machine epsilon.
+---------------------------------------------- 
+
+Calculated epsilon for floats, doubles and long doubles are
+1.192092896e-07,
+4.440892099e-16,
+2.168404345e-19. 
+
+The actual values are 
+0.0000001192,
+2.220446049e-16
+1.084202172e-19. 
+
+2) Sum_up/down.
+---------------------------------------------- 
+
+Sum_up_float = 15.403683.
+Sum_down_float = 18.807919.
+
+Sum_up_double = 21.371631.
+Sum_down_double = 21.371631.
+
+ii)  Explain the difference.
+      ¤ The difference between the forward and backward sums of floats, and the difference between floats and doubles,
+        are due to the noncommutative nature of floating point arithmetic, and a lack of precision. Say we're forward 
+        summing a bunch of floats. At some point the intermediate sum will larger than the precision, such that when  
+        we attempt to add another float, we'll get a rounding error. An example of this could be if we tried to sum   
+        10000000.0 and 1.0 with single precision floating point numbers (7 decimal pt. precision). The sum in this    
+        case would be 10000000.0 as it is rounded down to comply with precision. Thus the sum will terminate at some  
+        point before convergence, and will no longer seem to be updated. In the case of the backward sum we are       
+        trying to sum small numbers starting from a large number, and the sum terminates very early. This problem does
+        not pop up with doubles since we have double the decimal point precision and wont run into this issue.      
+
+iii) Does this sum converge as function of max?
+      ¤ I guess the answer here would seem to be no, since we'll get a rounding error before convergence.           
+
+
+3) Int equal function.
+---------------------------------------------- 
+
+
+I implemented the function, and i guess it works. 
+Not sure what else to do with this assignment...
+ 
+4) Name the digit.
+---------------------------------------------- 
+
+Please input your digit: 
+Your digit was one.         

@@ -7,7 +7,7 @@
 # A macro definition looks like a normal assignment in a programming language,
 
 CC       =  gcc
-CFLAGS   =  -Ofast -fwrapv # This is a macro definition
+CFLAGS   =  -O -fwrapv # This is a macro definition
 LDFLAGS  =  -lm
 # The macro can be called as $(CFLAGS) and will return the string "-Wall -std=gnu99".
 

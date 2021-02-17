@@ -81,30 +81,32 @@ int main(){
   // iii. The machine epsilon --------------------------------------------------
   printf("\niii. The machine epsilon.\n");
   printf("---------------------------------------------- \n\n");
+  // IT APPEARS THAT THE OPTIMIZATION SCHEME -OFAST WILL CAUSE THE COMPUTATIONS OF EPSILONS BELOW
+  // TO BE BROKEN, SINCE WE WILL EVALUATE f!=0 INSTEAD, AND GET INFINITE PRECISION.
 
   // Here we compute the machine epsilon
-  float f = 1; // Start from a float, let's say 1.0...
+  float f = 1.0f; // Start from a float, let's say 1.0...
   float prev_f; // This is where my solution differs from that of Dmitris.
 
   // We'll compute it using each of the three methods.
-  while( 1 + f != 1 ){ // Keep dividing 1.0, untill f is zero.
+  while( (float) 1 + f != 1 ){ // Keep dividing 1.0, untill f is zero.
     prev_f = f; // We place the intermediate value in prev_f, since f ultimately ends up being 0 in the last step for some reason.
     f /= 2;     // We simply keep dividing by two untill the while loop cancels.
   }
-  prev_f *= 2;  // We multiply by two to actually get the difference between two adjacent floats. Otherwise we only have half the difference.
+  //prev_f *= 2;  // We multiply by two to actually get the difference between two adjacent floats. Otherwise we only have half the difference.
 
-  f = 1;
-  for  (; 1 + f != 1; f /= 2){  // Same for for-loops
+  f = 1.0f;
+  for  (; (float) 1 + f != 1; f /= 2){  // Same for for-loops
     prev_f = f;
   }
-  prev_f *= 2;
+  //prev_f *= 2;
 
-  f = 1;
+  f = 1.0f;
   do {  // Same for do-while-loops
     prev_f = f;
     f /= 2;
-  } while ( 1 + f != 1  );
-  prev_f *= 2;
+  } while ( (float) 1 + f != 1  );
+  //prev_f *= 2;
 
   double d = 1; // Do the same for doubles
   double prev_d;
@@ -127,7 +129,7 @@ int main(){
   } while ( 1 + d != 1 );
   prev_d  *= 2;
 
-  long double ld = 1; // Finally do the same for long doubles
+  long double ld = 1.0L; // Finally do the same for long doubles
   long double prev_ld;
   while(  1 + ld != 1 ){
     prev_ld = ld;
@@ -135,14 +137,14 @@ int main(){
   }
   prev_ld *= 2;
 
-  ld = 1;
+  ld = 1.0L;
   prev_ld = 1;
   for  (; 1 + ld != 1;   ld /= 2){
     prev_ld = ld;
   }
   prev_ld *= 2;
 
-  ld = 1;
+  ld = 1.0L;
   prev_ld = 1;
   do{
     prev_ld = ld;
