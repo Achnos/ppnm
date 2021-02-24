@@ -1,0 +1,112 @@
+------ Praktisk Programmering og Numeriske Metoder Answers ------
+
+######################################################################################################################
+# ------------------------------------------------------------------------------------------------------------------ #
+# -------------------------------------------------- Questions 5 --------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------ #
+######################################################################################################################
+
+Questions 6 
+
+- In gnuplot, how do you specify the ranges on the x- and y- axes?
+	
+	¤ This can be done like for example 
+		
+		plot [-pi:pi] [-3:3]  tan(x), 1/x
+		
+	  otherwise like
+	  
+	  	set xrange [-pi:pi]
+		set yrange [-3:3]
+		
+	  where the first [..] denotes the x-range, and the latter denotes the y-range
+
+- In the datafile for gnuplot, how do you separate data intended for separate lines on the plot?
+	
+	¤ This can be done with a .txt file in which each column denotes a new line. If we need to plot to functions (x, f_1(x)) and (x, f_2(x)) we have a column
+	  the x values first (typically), a column for f_1(x), and one for f_2(x). The columns will be separated with either a space, comma or a tab. Plotting the former
+	  would be done using
+	  
+	  	plot "data.txt" using 1:2 with line
+	  	
+	  to use the column 1 of 'data.txt' as x data, column 2 as y data using a line. Thus plotting the latter function we should simply replace 1:2 with 1:3. 
+
+- Suppose you have a data-file with several columns of data. With gnuplot, how do you plot, say, third column vs. second?
+    Hint: in gnuplot: help plot using.
+    
+    	¤ I already answered this above. We use
+    	
+    		plot "path-to-data-file" using 3:2
+
+- Suppose you have a data-file with (x,y) data organised in two columns. How do you plot, say, y^2 vs. x?
+    Hint: in gnuplot: help plot using.
+    
+    	¤ In this case we could use a column reference such as $2, like
+    		
+    		plot "path-to-data-file" using (1):($2*$2)
+    		
+    	  $2 refers to the second column, som $2*$2 is entrywise multiplication with itself, i.e. squaring each element.
+
+- How can you find out whether GSL is installed on your box? Hint: gsl-config.
+
+	¤ By running gsl-config --version. If it is not installed then the terminal will echo some sort of error
+
+- How can you find out which C-flags you need to use with your GSL installation? Hint: gsl-config.
+
+	¤ gsl-config --cflags will tell us what compiler flags we need to compile a GSL program.
+
+- How can you find out which libraries you need to link with your GSL installation? Hint: gsl-config.
+
+	¤ gsl-config ----libs will tell us what linker flags we need to link a GSL program.
+
+- Explain the syntax `command` and $(command) in bash. Hint: Bash command substitution; POSIX shell command substitution.
+
+	¤ Both effectively yields the same result. Whatever is inside '..' or $(..) should be run by bash, the output captured and pasted back into where the original 
+	  statement of either '..' or $(..) was placed. The former version is deprecated and should generally not be used. This, together with the answer to the former
+	  question, is why, when using GSL, we need to use
+	  
+	  	CFLAGS     =  -O -Wall -std=gnu11 $(shell gsl-config --cflags)
+		LDLIBS     =  $(shell gsl-config --libs)
+	
+	  As this will run the shell command within and return the necessary compiler and linker flags needed to build the GSL program. 
+
+- Why do you need double-dollar, $$(command), in the Makefile? Hint: GNU make: variables in recipes.
+
+	¤ The double dollar sign is used for this since $(..) is variable lookup in make.
+
+- What is "recipe echoing"?
+
+	¤ Ordinarily make will print each line in a recipe in order to give the appearance that we are typing them ourselves. When a line starts with ‘@’, the echoing 
+	  of that line is suppressed. The ‘@’ is discarded before the line is passed to the shell. 
+
+- What will the following Makefile print?
+
+  pwd = a string
+    test:
+    	@echo pwd
+    	@echo `pwd`
+    	@echo $(pwd)
+    	@echo $$(pwd)
+    	
+    	¤ The makefile will print
+    
+	    	$ pwd
+		$ /home/marc/Dropbox/repos/ppnm/qna
+		$ a string
+		$ /home/marc/Dropbox/repos/ppnm/qna
+
+      	  pwd stands for path to working directory, and is a command to echo the path of the current working directory. The first line simply echoes 'pwd' which doesn't tell
+	  bash that it needs to actually run the string as a command. The second will, like the last actually tell bash to run pwd aas a shell command, while the third will
+	  expand the variable pwd, and hence echo 'a string'. The usage of @ in all lines will suppress 'echo' in front of each echo. 
+
+- In C-language "type conversion" (or "coersion" or "casting") is allowed with the explicit cast operator (type)variable. So, what does the following line mean?
+
+	double  a = *(double*)params;
+	
+	¤ The above line allocates memory for a double a, and initiallizes it as the value of params cast to a double. In other words; params is cast to a double pointer, which
+	  is then dereferenced *(...), yielding the value at the address said double pointer is pointing to. 
+
+
+
+
+######################################################################################################################
