@@ -1,0 +1,32 @@
+------ Praktisk Programmering og Numeriske Metoder Answers ------
+
+######################################################################################################################
+# ------------------------------------------------------------------------------------------------------------------ #
+# -------------------------------------------------- Questions 7 --------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------ #
+######################################################################################################################
+
+Questions 7 mp
+
+ - What is pthreads? Hint: man pthreads.
+    
+ - Which header files do you have to include in order to use pthreads? Hint: man pthread_create.
+    
+ - Do you need any CFLAGS and/or LDLIBS to use pthreads?
+    
+ - How do you create a pthread?
+    
+ - What is "thread-safe"? Hint: man pthreads|less --pattern=safe.
+    
+ - Is rand thread-safe? Hint: man rand_r.
+    
+ - What happens if you forget to join a joinable thread? Hint: man pthread_join|less --pattern=NOTE.
+    
+ - What is OpenMP?
+    
+ - Does your compiler supports OpenMP?
+    
+ - What are the CFLAGS and LDLIBS for your installation of OpenMP? 
+
+
+######################################################################################################################

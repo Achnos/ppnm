@@ -3,8 +3,8 @@ CFLAGS += -pthread
 CFLAGS += -fopenmp
 LDLIBS = -lm -lgomp -lpthread
 
-OBJECTS = main.o rndNum.o piApproxMultithreaded.o
-HDRS = rndNum.h piApproxMultithreaded.h
+OBJECTS = main.o rndNum.o piApproxMultithreaded.o piApproxOpenMP.o diffClock.o
+HDRS = rndNum.h piApproxMultithreaded.h piApproxOpenMP.h diffClock.h
 EXECS = main
 
 default: $(EXECS)
@@ -15,4 +15,4 @@ $(EXECS): $(OBJECTS)
 $(OBJECTS): $(HDRS)
 
 clean:
-	rm main main.o
+	$(RM) $(EXECS) $(OBJECTS)

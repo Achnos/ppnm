@@ -3,6 +3,6 @@
 
 #include <pthread.h>
 
-void piApproxMultithreaded( int numOfPts );
+void piApproxMultithreaded( double numOfPts );
 
 #endif
