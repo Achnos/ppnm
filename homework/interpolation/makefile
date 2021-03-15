@@ -1,14 +1,16 @@
 CFLAGS 		 +=  $(shell gsl-config --cflags)
 LDLIBS 		 +=  $(shell gsl-config --libs)
+LDLIBS 		 +=  -lm -Wall 
+
 CC		  		=  gcc
 PIPE     		=  cat
-LDLIBS 		 +=  -lm
+
 INPUT   		=  cos_tabulated.txt
-LINOUTPUT   =  lin_spline_output.txt
-QUADOUTPUT  =  quad_spline_output.txt
-EXECS   	  =  main
-OBJCTS  	  =  main.o linSpline.o binarySearch.o inputToArray.o gslIntFunc.o quadSpline.o
-HDRS    	  =  linSpline.h binarySearch.h gslIntFunc.h quadSpline.h
+LINOUT   		=  lin_spline_output.txt
+QUADOUT  		=  quad_spline_output.txt
+EXE   	  	=  main
+OBJ  	  		=  main.o linSpline.o integrateFunction.o quadSpline.o utilities.o
+HDRS    	  =  linSpline.h integrateFunction.h quadSpline.h utilities.h
 IMGFLS  	  =  lin_spline_plot.png quad_spline_plot.png
 TXT     		=  output.txt
 
@@ -24,10 +26,10 @@ lin_spline_plot.png: lin_spline_plot.gpi lin_spline_output.txt cos_tabulated.txt
 quad_spline_plot.png: quad_spline_plot.gpi quad_spline_output.txt cos_tabulated.txt
 	pyxplot $<
 
-$(LINOUTPUT) $(TXT): $(EXECS) $(INPUT)
-	./$< $(INPUT) $(LINOUTPUT) $(QUADOUTPUT) 1> $(TXT)
+$(LINOUT) $(TXT): $(EXE) $(INPUT)
+	./$< $(INPUT) $(LINOUT) $(QUADOUT) 1> $(TXT)
 
-$(EXECS): $(OBJCTS) $(HDRS)
+$(EXE): $(OBJ) $(HDRS)
 
 clean:
-	$(RM) $(EXECS) $(OUTPUT) $(OBJCTS) $(IMGFLS) $(TXT)
+	$(RM) $(EXE) $(OUTPUT) $(OBJ) $(IMGFLS) $(TXT)

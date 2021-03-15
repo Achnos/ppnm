@@ -1,48 +1,62 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "binarySearch.h"
+#include "utilities.h"
 #include "quadSpline.h"
 
-quadSpline* quadSplineAlloc( int numOfPts, double* pts, double* funcVals ){
-  quadSpline* spline = (quadSpline*)malloc(sizeof(quadSpline));
+quadSpline* quadSpline_init( int numOfPts, double* pts, double* funcVals ){
+  //  ------------------------------------------------------------------------------
+  /*  quadSpline constructor to initiallize a quadratic spline from a quadSpline
+      struct, by filling the various field values from respective function inputs.
+
+      ¤ int       numOfPts  : The number of points to interpolate in.
+      ¤ double*   pts       : A pointer to an array of doubles,
+                              the known points {x_i}.
+      ¤ double*   funcVals  : A pointer to an array of doubles,
+                              the corresponding function values {f(x_i)}
+
+      Returns: An inittialized quadSpline* struct                                    */
+  //  ------------------------------------------------------------------------------
+  quadSpline* spline = (quadSpline*)malloc( sizeof(quadSpline) );
 
   // NumOfEqs is the number of needed equations for the quadratic spline interpolation,
   // or the number of intervals to interpolate in (between a numOfPts amount of points)
   int numOfEqs  =  numOfPts - 1;
 
-  // Fill out field values
+  // Fill out field values by first allocating memory to be initiallized below.
   spline -> firstCoeff   =  (double*)malloc( numOfEqs*sizeof( double ) );
   spline -> secondCoeff  =  (double*)malloc( numOfEqs*sizeof( double ) );
   spline -> pts          =  (double*)malloc( numOfPts*sizeof( double ) );
   spline -> funcVals     =  (double*)malloc( numOfPts*sizeof( double ) );
   spline -> numOfPts     =  numOfPts;
 
+  // Fill out pts[] and funcVals[] arrays at fields
   for ( int it = 0; it < numOfPts; it++ ){
     spline -> pts[it]       =  pts[it];
     spline -> funcVals[it]  =  funcVals[it];
   }
 
+  // Compute slopes at each intervals between individual pts[i], pts[i+1]
   double ptsDiff[numOfPts - 1];
   double slope[numOfPts - 1];
-
   for ( int it = 0; it < numOfPts - 1; it++ ){
     ptsDiff[it]  =  pts[it + 1] - pts[it];
     slope[it]    =  (funcVals[it + 1] - funcVals[it]) / ptsDiff[it];
   }
 
-  // Forward recursion
+  // Forward recursion to compute the second quadratic spline coefficient
   spline -> secondCoeff[0] = 0;
   for ( int it = 0; it < numOfPts - 2; it++){
     spline -> secondCoeff[it + 1] = (slope[it + 1] - slope[it] - (spline->secondCoeff[it])*ptsDiff[it])/ptsDiff[it + 1];
   }
 
-  // Backward recursion
+  // Backward recursion, starting from last value from forward recursion
   spline -> secondCoeff[numOfPts - 2] /=2;
   for ( int it = numOfPts - 3; it >= 0; it--){
     spline -> secondCoeff[it] = (slope[it + 1] - slope[it] - (spline->secondCoeff[it + 1]) * ptsDiff[it + 1]) / ptsDiff[it];
   }
 
+  // Finally compute first coefficient
   for ( int it = 0; it < numOfPts - 1; it++ ){
     spline -> firstCoeff[it] = slope[it] - (spline->secondCoeff[it])*ptsDiff[it];
   }
@@ -51,7 +65,18 @@ quadSpline* quadSplineAlloc( int numOfPts, double* pts, double* funcVals ){
 }
 
 
-double quadSplineEval( quadSpline* spline, double evalPt ){
+double quadSpline_eval( quadSpline* spline, double evalPt ){
+  //  ------------------------------------------------------------------------------
+  /*  Do quadratic spline interpolation, using an already initiallized quadSpline*
+      struct. The quadSpline* struct may be initiallized using quadSpline_init().
+      The quadratic interpolant is computed at the evaluation pt. evalPt.
+
+      ¤ quadSpline*       : A pointer to an initiallized quadSpline struct,
+                            initiallized using quadSpline_init()
+      ¤ double*   evalPt  : Point at which to evaluate interpolant at
+
+      Returns: The function value of the interpolant at evalPt.                      */
+  //  ------------------------------------------------------------------------------
   assert( (evalPt >=  (spline -> pts[0])) && (evalPt <= (spline -> pts[spline -> numOfPts -1])) );
 
   //  Use a binary search to determine which subinterval evalPt is in
@@ -63,7 +88,13 @@ double quadSplineEval( quadSpline* spline, double evalPt ){
 }
 
 
-void quadSplineFree( quadSpline* spline ){
+void quadSpline_free( quadSpline* spline ){
+  //  ------------------------------------------------------------------------------
+  /*  quadSpline destructor, to free allocated memory.
+
+      ¤ quadSpline*       : A pointer to an initiallized quadSpline struct,
+                            initiallized using quadSpline_init()                     */
+  //  ------------------------------------------------------------------------------
   free(spline -> pts);
   free(spline -> funcVals);
   free(spline -> firstCoeff);

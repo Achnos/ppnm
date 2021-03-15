@@ -1,9 +1,9 @@
 #include <assert.h>
 #include <math.h>
 #include "linSpline.h"
-#include "binarySearch.h"
+#include "utilities.h"
 
-double linSplineInterp( int numOfPts, double* pts, double* funcVals, double evalPt){
+double linSpline( int numOfPts, double* pts, double* funcVals, double evalPt){
   //  ------------------------------------------------------------------------------
   /*  Do linear spline interpolation on a set of known points (x_i, f(x_i))
       using a binary search method. This asumes the dataset is an ordered array.
@@ -25,33 +25,49 @@ double linSplineInterp( int numOfPts, double* pts, double* funcVals, double eval
   assert( (numOfPts > 1) && (evalPt >= pts[0]) && (evalPt <= pts[numOfPts - 1]) );
 
   //  Use a binary search to determine which subinterval evalPt is in
-  int whichInterval = binarySearch(numOfPts, pts, evalPt);
-
-  double funcValDiff = (funcVals[whichInterval + 1] - funcVals[whichInterval]);
-  double ptsDiff = (pts[whichInterval + 1] - pts[whichInterval]);
+  int whichInterval   =  binarySearch(numOfPts, pts, evalPt);
+  double funcValDiff  =  (funcVals[whichInterval + 1] - funcVals[whichInterval] );
+  double ptsDiff      =  (pts[whichInterval + 1]      - pts[whichInterval]      );
+  double slope        =  funcValDiff / ptsDiff;
 
   assert( ptsDiff > 0 );
 
-  double interpVal  =  funcVals[whichInterval] + funcValDiff / ptsDiff * (evalPt - pts[whichInterval]);
+  double interpVal  =  funcVals[whichInterval] + slope * (evalPt - pts[whichInterval]);
   return interpVal;
 }
 
 
-double linSplineIntInterp( int numOfPts, double* pts, double* funcVals, double evalPt ){
+double linSpline_integ( int numOfPts, double* pts, double* funcVals, double evalPt ){
+  //  ------------------------------------------------------------------------------
+  /*  Integrate linear spline interpolation from a set of known points (x_i, f(x_i))
+      using a binary search method. This asumes the dataset is an ordered array.
+      Otherwise use sorting before passing to the function.
 
-  int evalIntervalId   =  binarySearch(numOfPts, pts, evalPt);
+      ¤ int       numOfPts  : The number of points to interpolate in.
+      ¤ double*   pts       : A pointer to an array of doubles,
+                              the known points {x_i}.
+      ¤ double*   funcVals  : A pointer to an array of doubles,
+                              the corresponding function values {f(x_i)}
+      ¤ double    evalPt    : The query point, double values at which to evaluate
+                              the interpolant.
+
+      Returns: A double P(evalPt), where P() is the interpolant function integrated  */
+  //  ------------------------------------------------------------------------------
+
+  //  Use a binary search to determine which subinterval evalPt is in
+  int whichInterval   =  binarySearch(numOfPts, pts, evalPt);
 
   double integral = 0;
-  for ( int intervalId = 0; intervalId <= evalIntervalId; intervalId++ ){
-    double funcValDiff  =  (funcVals[intervalId + 1] - funcVals[intervalId]);
-    double ptsDiff      =  (pts[intervalId + 1] - pts[intervalId]);
+  for ( int Id = 0; Id <= whichInterval; Id++ ){
+    double funcValDiff  =  (funcVals[Id + 1] - funcVals[Id] );
+    double ptsDiff      =  (pts[Id + 1]      - pts[Id]      );
     double slope        =  funcValDiff / ptsDiff;
 
-    if ( intervalId < evalIntervalId ){
-      integral += funcVals[intervalId] * ( pts[intervalId+1] - pts[intervalId] ) + slope * pow( ( pts[intervalId+1] - pts[intervalId] ), 2) / 2;
+    if ( Id < whichInterval ){
+      integral += funcVals[Id] * ( pts[Id + 1] - pts[Id] ) + slope * pow( ( pts[Id + 1] - pts[Id] ), 2) / 2;
     }
     else {
-      integral += funcVals[intervalId] * ( evalPt - pts[intervalId] ) + slope * pow( ( evalPt - pts[intervalId] ), 2) / 2;
+      integral += funcVals[Id] * ( evalPt - pts[Id] ) + slope * pow( ( evalPt - pts[Id] ), 2) / 2;
     }
   }
 

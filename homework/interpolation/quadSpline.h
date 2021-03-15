@@ -10,8 +10,8 @@ typedef struct { int      numOfPts    ; /* n   */
                  double*  firstCoeff  ; /* b_i */
                  double*  secondCoeff ; /* c_i */ } quadSpline;
 
-quadSpline* quadSplineAlloc( int numOfPts, double* pts, double* funcVals );
-double quadSplineEval( quadSpline* spline, double evalPt );
-void quadSplineFree( quadSpline* spline );
+quadSpline* quadSpline_init( int numOfPts, double* pts, double* funcVals );
+double quadSpline_eval( quadSpline* spline, double evalPt );
+void quadSpline_free( quadSpline* spline );
 
 #endif
