@@ -7,6 +7,19 @@
 
 
 cubicSpline* cubicSpline_init( int numOfPts, double* pts, double* funcVals ){
+  //  ------------------------------------------------------------------------------
+  /*  cubicSpline constructor to initiallize a cubic spline from a cubicSpline
+      struct, by filling the various field values from respective function inputs.
+
+      ¤ int       numOfPts  : The number of points to interpolate in.
+      ¤ double*   pts       : A pointer to an array of doubles,
+                              the known points {x_i}.
+      ¤ double*   funcVals  : A pointer to an array of doubles,
+                              the corresponding function values {f(x_i)}
+
+      Returns: An inittialized cubicSpline* struct                                    */
+  //  ------------------------------------------------------------------------------
+
   int numOfEqs           =  numOfPts - 1;
   cubicSpline* spline    =  (cubicSpline*)malloc( sizeof(cubicSpline) );
   spline -> pts          =  (double*)malloc( numOfPts*sizeof(double) );
