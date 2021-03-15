@@ -36,7 +36,8 @@ double linSplineInterp( int numOfPts, double* pts, double* funcVals, double eval
   return interpVal;
 }
 
-double linSplineInterp_integrate( int numOfPts, double* pts, double* funcVals, double evalPt ){
+
+double linSplineIntInterp( int numOfPts, double* pts, double* funcVals, double evalPt ){
 
   int evalIntervalId   =  binarySearch(numOfPts, pts, evalPt);
 

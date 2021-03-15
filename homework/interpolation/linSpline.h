@@ -3,8 +3,7 @@
 
 #include <assert.h>
 
-double linSplineInterp( int numOfPts, double* pts, double* funcVals, double evalPt);
-
-double linSplineInterp_integrate( int numOfPts, double* pts, double* funcVals, double evalPt );
+double linSplineInterp        ( int numOfPts, double* pts, double* funcVals, double evalPt );
+double linSplineIntInterp     ( int numOfPts, double* pts, double* funcVals, double evalPt );
 
 #endif

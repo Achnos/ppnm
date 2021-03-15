@@ -3,11 +3,11 @@ LDLIBS +=  $(shell gsl-config --libs)
 CC		  =  gcc
 PIPE    =  cat
 LDLIBS +=  -lm
-INPUT   =  exp_tabulated_100.txt
+INPUT   =  cos_tabulated.txt
 OUTPUT  =  spline_output.txt
 EXECS   =  main
-OBJCTS  =  main.o linSpline.o binarySearch.o inputToArray.o gslIntFunc.o
-HDRS    =  linSpline.h binarySearch.h gslIntFunc.h
+OBJCTS  =  main.o linSpline.o binarySearch.o inputToArray.o gslIntFunc.o quadSpline.o
+HDRS    =  linSpline.h binarySearch.h gslIntFunc.h quadSpline.h
 IMGFLS  =  spline_plot.png
 TXT     =  output.txt
 
@@ -17,7 +17,7 @@ default: $(IMGFLS) print
 print: $(TXT)
 	$(PIPE) $<
 
-spline_plot.png: spline_plot.gpi spline_output.txt exp_tabulated.txt
+spline_plot.png: spline_plot.gpi spline_output.txt cos_tabulated.txt
 	pyxplot $<
 
 $(OUTPUT) $(TXT): $(EXECS) $(INPUT)
