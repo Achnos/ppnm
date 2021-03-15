@@ -1,0 +1,14 @@
+set terminal png
+set output "$@"
+set key outside
+set tics in
+set grid
+set xlabel "$x$"
+set ylabel "$\cos(x)$"
+set title "$\cos(x)$ interpolated"
+set output "quad_spline_plot.png"
+plot "spline_output.txt" using 1:2 with line lw 3 col PineGreen title "Interpolant" \
+,"quad_spline_output.txt" using 1:3 with line lw 1 col SeaGreen title "Interpolant by GSL" \
+, "quad_spline_output.txt" using 1:4 with line lw 3 col MidnightBlue title "Interpolant of integral" \
+, "quad_spline_output.txt" using 1:5 with line lw 1 col ProcessBlue title "Interpolant of integral by GSL" \
+, "cos_tabulated.txt" using 1:2 with points col Black pointtype 2 title "Tabulated data"

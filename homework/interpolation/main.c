@@ -5,6 +5,7 @@
 #include <gsl/gsl_interp.h>
 
 #include "linSpline.h"
+#include "quadSpline.h"
 #include "gslIntFunc.h"
 
 void inputToArray(double* XData, double* YData, char* inputFileName );
@@ -65,6 +66,25 @@ int main( int argc, char* argv[]) {
   printf("The integral of cos(x) (from math.h)       from        %g to     %g using GSL  = %g\n", lowerLimit, upperLimit, integralValComp);
   printf("The integral of cos(x) (from WolframAlpha) from        %g to     %g            = -0.99999\n", lowerLimit, upperLimit );
 
+
+  quadSpline* spline = quadSplineAlloc( numOfPts, xData, yData );
+
+  gsl_interp* GSLinterpQuad = gsl_interp_alloc(gsl_interp_polynomial, numOfPts);
+  gsl_interp_init(GSLinterpQuad, xData, yData, numOfPts);
+
+  FILE* myOutputFileStream_Quad = fopen(argv[3], "w");
+
+  for ( double evalPt = xData[0]; evalPt < xData[numOfPts]; evalPt += resolution ){
+
+    interpValTmp        =  quadSplineEval( spline, evalPt );
+    interpValGSLTmp     =  gsl_interp_eval(        GSLinterpQuad,  xData, yData,           evalPt, NULL );
+    //interpValIntTmp     =  linSplineIntInterp(     numOfPts,       xData, yData,           evalPt       );
+    //interpValIntGSLTmp  =  gsl_interp_eval_integ(  GSLinterpLin,   xData, yData, xData[0], evalPt, NULL );
+
+    fprintf(myOutputFileStream_Quad, "%g\t%g\t%g\n", evalPt, interpValTmp, interpValGSLTmp);//, interpValIntTmp, interpValIntGSLTmp);
+  }
+
+  quadSplineFree(spline);
   gsl_interp_free(GSLinterpLin);
   return 0;
 }
