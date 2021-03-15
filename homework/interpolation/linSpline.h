@@ -5,6 +5,6 @@
 
 double linSplineInterp( int numOfPts, double* pts, double* funcVals, double evalPt);
 
-//double linSplineInterp_integrate(gsl_vector x, gsl_vector y, double z);
+double linSplineInterp_integrate( int numOfPts, double* pts, double* funcVals, double evalPt );
 
 #endif

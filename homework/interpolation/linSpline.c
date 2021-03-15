@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <math.h>
 #include "linSpline.h"
 #include "binarySearch.h"
 
@@ -35,6 +36,23 @@ double linSplineInterp( int numOfPts, double* pts, double* funcVals, double eval
   return interpVal;
 }
 
-//double linSplineInterp_integrate(gsl_vector x, gsl_vector y, double z){
-  //return 0.0;
-//}
+double linSplineInterp_integrate( int numOfPts, double* pts, double* funcVals, double evalPt ){
+
+  int evalIntervalId   =  binarySearch(numOfPts, pts, evalPt);
+
+  double integral = 0;
+  for ( int intervalId = 0; intervalId <= evalIntervalId; intervalId++ ){
+    double funcValDiff  =  (funcVals[intervalId + 1] - funcVals[intervalId]);
+    double ptsDiff      =  (pts[intervalId + 1] - pts[intervalId]);
+    double slope        =  funcValDiff / ptsDiff;
+
+    if ( intervalId < evalIntervalId ){
+      integral += funcVals[intervalId] * ( pts[intervalId+1] - pts[intervalId] ) + slope * pow( ( pts[intervalId+1] - pts[intervalId] ), 2) / 2;
+    }
+    else {
+      integral += funcVals[intervalId] * ( evalPt - pts[intervalId] ) + slope * pow( ( evalPt - pts[intervalId] ), 2) / 2;
+    }
+  }
+
+  return integral;
+}

@@ -5,13 +5,13 @@ int binarySearch( int numOfPts, double* pts, double evalPt ){
   int leftId   =  0 ;
   int rightId  =  numOfPts - 1 ;
 
-  while ( rightId - leftId > 1 ) {      // While there are two intervals to choose from
+  while ( rightId - leftId > 1 ) {        // While there are two intervals to choose from
     int middleId  =  (leftId + rightId) / 2;
 
-    if ( evalPt > pts[middleId] ) {   // If the point is in the right interval
+    if ( evalPt > pts[middleId] ) {       // If the point is in the right interval
       leftId   =  middleId;
     }
-    else {                              // Else it is in the left interval
+    else {                                // Else it is in the left interval
       rightId  =  middleId;
     }
   }

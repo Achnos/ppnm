@@ -1,13 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <gsl/gsl_integration.h>
 
 #include "linSpline.h"
+#include "gslIntFunc.h"
 
 void inputToArray(double* XData, double* YData, char* inputFileName );
 
 int main( int argc, char* argv[]) {
-  int numOfPts = 10;
+  int numOfPts = 100;
   int numOfQueryPts = (int)1e3;
 
   double* expXData = malloc( numOfPts*sizeof(double) );
@@ -30,6 +32,23 @@ int main( int argc, char* argv[]) {
     interpValTmp = linSplineInterp( numOfPts, expXData, expYData, evalPt);
     fprintf(myOutputFileStream, "%g\t%g\n", evalPt, interpValTmp);
   }
+
+  double lowerLimit       =   expXData[0] ;
+  double upperLimit       =   2*M_PI      ;
+  double absError         =   1e-6        ;
+  double relError         =   1e-6        ;
+  size_t iterationLimit   =   999         ;
+
+  double integralVal = linSplineInterp_integrate( numOfPts, expXData, expYData, upperLimit );
+
+  gsl_function gslFuncExp;
+
+  gslFuncExp.function  =  &exp;
+  gslFuncExp.params    =  NULL;
+  double integralValComp = integratedFunction( lowerLimit, upperLimit, &gslFuncExp, absError, relError, iterationLimit );
+
+  printf("The integrated interpolant up to 2pi is = %g\n", integralVal);
+  printf("Integrating exp(x) from 0 to 2pi using GSL = %g\n", integralValComp);
 
   free(expXData);
   free(expYData);

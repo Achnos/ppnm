@@ -7,4 +7,4 @@ set ylabel "$\exp(x)$"
 set title "$\exp(x)$ interpolated"
 set output "spline_plot.png"
 plot "spline_output.txt" using 1:2 with line lw 2 col Black title "Interpolant" \
-,"exp_tabulated.txt" using 1:2 with points col ProcessBlue pointtype 2 title "Tabulated data"
+,"exp_tabulated_100.txt" using 1:2 with points col ProcessBlue pointtype 2 title "Tabulated data"

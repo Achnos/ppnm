@@ -1,0 +1,2 @@
+The integrated interpolant up to 2pi is = 535.044
+Integrating exp(x) from 0 to 2pi using GSL = 534.492
