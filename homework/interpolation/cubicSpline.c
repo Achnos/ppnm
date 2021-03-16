@@ -12,6 +12,9 @@ cubicSpline* cubicSpline_init( int numOfPts, double* pts, double* funcVals ){
   /*  cubicSpline constructor to initiallize a cubic spline from a cubicSpline
       struct, by filling the various field values from respective function inputs.
 
+      All equations are based on
+      [Fedorov, D.V.. Introduction to Numerical methods, 2021]
+
       ¤ int       numOfPts  : The number of points to interpolate in.
       ¤ double*   pts       : A pointer to an array of doubles,
                               the known points {x_i}.
@@ -30,11 +33,13 @@ cubicSpline* cubicSpline_init( int numOfPts, double* pts, double* funcVals ){
   spline -> thirdCoeff   =  (double*)malloc( numOfEqs*sizeof(double) );
   spline -> numOfPts     =  numOfPts;
 
+  // Fill field values from input data
   for( int it = 0; it < numOfPts; it++ ){
     spline -> pts[it]       =  pts[it];
     spline -> funcVals[it]  =  funcVals[it];
   }
 
+  // Set up slope array (p_i and h_i) variables
   double ptsDiff[numOfEqs];
   double slope[numOfEqs];
   for(int it = 0; it < numOfEqs; it++){
@@ -44,32 +49,57 @@ cubicSpline* cubicSpline_init( int numOfPts, double* pts, double* funcVals ){
     slope[it] = (funcVals[it + 1] - funcVals[it]) / ptsDiff[it];
   }
 
-  double D[numOfPts    ];
-  double Q[numOfPts - 1];
-  double B[numOfPts    ];
+  /*
+    Set up the tridiagonal system of equations
+    where D are the diagonal elements, Q the above diagonal,
+    and B the right hand side vector elements. The system
+    of equations is of the form
 
-  D[0] = 2            ;
-  Q[0] = 1            ;
-  B[0] = 3 * slope[0] ;
+      [ D_1, Q_1,  0,  0, ... ]   ( b_1 )     ( B_1 )
+      [  1 , D_2, Q_2, 0, ... ]   ( .   )     (  .  )
+      [  .    .    .   .  .   ] * ( .   )  =  (  .  )
+      [ ...  ...   0,  1, D_n ]   ( .   )     ( B_n )
+
+     [Fedorov, D.V.. INM, 2021]
+  */
+
+  double LHS_matrixDiag[numOfPts];
+  double LHS_matrixAboveDiag[numOfPts - 1];
+  double RHS_vec[numOfPts];
+
+  /* Starting recursion based on eq. (21) from [INM] */
+  LHS_matrixDiag[0]       = 2             ;
+  LHS_matrixAboveDiag[0]  = 1             ;
+  RHS_vec[0]              = 3 * slope[0]  ;
+
+  /*  Fill arrys according to eq (21) from [INM] */
   for( int it = 0; it < numOfEqs - 1; it++ ) {
-    D[it + 1] = 2 * ptsDiff[it] / ptsDiff[it + 1] + 2;
-    Q[it + 1] =     ptsDiff[it] / ptsDiff[it + 1];
-    B[it + 1] = 3 * (slope[it] + slope[it + 1] * ptsDiff[it] / ptsDiff[it + 1]);
+    LHS_matrixDiag[it + 1]        =  2 * ptsDiff[it] / ptsDiff[it + 1] + 2;
+    LHS_matrixAboveDiag[it + 1]   =      ptsDiff[it] / ptsDiff[it + 1];
+    RHS_vec[it + 1]               =  3 * (slope[it] + slope[it + 1] * ptsDiff[it] / ptsDiff[it + 1]);
   }
-  D[numOfPts - 1] = 2                      ;
-  B[numOfPts - 1] = 3 * slope[numOfPts - 2];
+  LHS_matrixDiag[numOfPts - 1]  =  2                      ;
+  RHS_vec[numOfPts - 1]         =  3 * slope[numOfPts - 2];
 
+  /* Perform Gauss elimination to reduce the LHS matrix
+     using eq (29) from [INM]                            */
   for(int it = 1; it < numOfPts; it++){
-    D[it] -= Q[it - 1] / D[it - 1];
-    B[it] -= B[it - 1] / D[it - 1];
+    LHS_matrixDiag[it]  -=  LHS_matrixAboveDiag[it - 1]  / LHS_matrixDiag[it - 1];
+    RHS_vec[it]         -=  RHS_vec[it - 1]              / LHS_matrixDiag[it - 1];
   }
-  spline -> firstCoeff[numOfEqs] = B[numOfPts - 1] / D[numOfPts - 1];
+
+  /* Do backwards substitution to find the b_i coefficient
+     (firstCoeff[i]) using eq (29) from [INM]              */
+  spline -> firstCoeff[numOfEqs] = RHS_vec[numOfPts - 1] / LHS_matrixDiag[numOfPts - 1];
   for( int it = numOfEqs - 1; it >= 0; it--){
-    spline -> firstCoeff[it] = (B[it] - Q[it]*(spline -> firstCoeff[it + 1])) / D[it];
+    spline -> firstCoeff[it] = (RHS_vec[it] - LHS_matrixAboveDiag[it]*(spline -> firstCoeff[it + 1])) / LHS_matrixDiag[it];
   }
+
+  /* Since we know how the b_i's, c_i's and d_i's relate we may now compute the
+     remaining coefficients using eq (20) from [INM]                            */
   for( int it = 0; it < numOfEqs; it++ ){
     spline -> secondCoeff[it]  =  (-2 * (spline -> firstCoeff[it]) - (spline -> firstCoeff[it + 1]) + 3*slope[it]) / ptsDiff[it];
-    spline -> thirdCoeff[it]   =  ((spline -> firstCoeff[it]) + (spline -> firstCoeff[it + 1]) - 2*slope[it]) / ptsDiff[it] /ptsDiff[it];
+    spline -> thirdCoeff[it]   =  (     (spline -> firstCoeff[it]) + (spline -> firstCoeff[it + 1]) - 2*slope[it]) / ptsDiff[it] /ptsDiff[it];
   }
 
   return spline;
