@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <math.h>
 
 #include "utilities.h"
 #include "cubicSpline.h"
@@ -99,6 +100,63 @@ double cubicSpline_eval( cubicSpline* spline, double evalPt ){
   double interpVal = (spline -> funcVals[whichInterval]) + firstDiff ;
   return interpVal;
 }
+
+double cubicSpline_eval_deriv( cubicSpline* spline, double evalPt ){
+  //  ------------------------------------------------------------------------------
+  /*  Do cubic spline interpolation of derivative, using an already initiallized
+      cubicSpline* struct. The cubicSpline* struct may be initiallized using
+      cubicSpline_init(). The cubic interpolant derivative is computed at the evaluation
+      point evalPt.
+
+      ¤ cubicSpline*      : A pointer to an initiallized quadSpline struct,
+                            initiallized using quadSpline_init()
+      ¤ double*   evalPt  : Point at which to evaluate interpolant at
+
+      Returns: The function value of the interpolant derivative at evalPt.                      */
+  //  ------------------------------------------------------------------------------
+  assert( (evalPt >=  (spline -> pts[0])) && (evalPt <= (spline -> pts[spline -> numOfPts -1])) );
+
+  //  Use a binary search to determine which subinterval evalPt is in
+  int whichInterval = binarySearch(spline -> numOfPts, spline -> pts, evalPt);
+  double ptsDiff = evalPt - (spline -> pts[whichInterval]);
+
+  double interpVal = (spline -> firstCoeff[whichInterval]) + 2*ptsDiff*(spline -> secondCoeff[whichInterval]) + 3*ptsDiff*ptsDiff*(spline -> thirdCoeff[whichInterval]) ;
+  return interpVal;
+}
+
+
+double cubicSpline_eval_integ( cubicSpline* spline, double evalPt ){
+  //  ------------------------------------------------------------------------------
+  /*  Integrate cubic spline interpolation from a set of known points (x_i, f(x_i))
+      using a binary search method. This asumes the dataset is an ordered array.
+      Otherwise use sorting before passing to the function.
+
+        ¤ cubicSpline*       : A pointer to an initiallized quadSpline struct,
+                                  initiallized using quadSpline_init()
+        ¤ double*   evalPt  : Point at which to evaluate interpolant at
+
+      Returns: A double P(evalPt), where P() is the interpolant function integrated  */
+  //  ------------------------------------------------------------------------------
+
+  //  Use a binary search to determine which subinterval evalPt is in
+  int whichInterval   =  binarySearch((spline -> numOfPts), (spline -> pts), evalPt);
+
+  double integral = 0;
+  double ptsDiff;
+  for ( int Id = 0; Id <= whichInterval; Id++ ){
+
+    if ( Id < whichInterval ){
+      ptsDiff = ((spline -> pts[Id + 1]) - (spline -> pts[Id]));
+    }
+    else {
+      ptsDiff = ( evalPt - (spline -> pts[Id]));
+    }
+    integral += (spline -> funcVals[Id]) * ptsDiff + (spline -> firstCoeff[Id]) * ptsDiff * ptsDiff / 2 + (spline -> secondCoeff[Id]) * ptsDiff * ptsDiff * ptsDiff / 3 + (spline -> thirdCoeff[Id]) * ptsDiff * ptsDiff * ptsDiff * ptsDiff/ 4;
+  }
+
+  return integral;
+}
+
 
 void cubicSpline_free(cubicSpline* spline){
   //  ------------------------------------------------------------------------------

@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <math.h>
 #include "linSpline.h"
 #include "utilities.h"
 
@@ -58,17 +57,18 @@ double linSpline_integ( int numOfPts, double* pts, double* funcVals, double eval
   int whichInterval   =  binarySearch(numOfPts, pts, evalPt);
 
   double integral = 0;
+  double funcValDiff;
+  double ptsDiff;
+  double slope;
   for ( int Id = 0; Id <= whichInterval; Id++ ){
-    double funcValDiff  =  (funcVals[Id + 1] - funcVals[Id] );
-    double ptsDiff      =  (pts[Id + 1]      - pts[Id]      );
-    double slope        =  funcValDiff / ptsDiff;
+    funcValDiff  =  (funcVals[Id + 1] - funcVals[Id] );
+    ptsDiff      =  (pts[Id + 1]      - pts[Id]      );
+    slope        =  funcValDiff / ptsDiff;
 
-    if ( Id < whichInterval ){
-      integral += funcVals[Id] * ( pts[Id + 1] - pts[Id] ) + slope * pow( ( pts[Id + 1] - pts[Id] ), 2) / 2;
+    if ( Id >= whichInterval ){
+      ptsDiff =  ( evalPt - pts[Id] ) ;
     }
-    else {
-      integral += funcVals[Id] * ( evalPt - pts[Id] ) + slope * pow( ( evalPt - pts[Id] ), 2) / 2;
-    }
+    integral += funcVals[Id] * ptsDiff + slope * ptsDiff * ptsDiff / 2;
   }
 
   return integral;

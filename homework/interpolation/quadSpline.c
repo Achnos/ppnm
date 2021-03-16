@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 #include "utilities.h"
 #include "quadSpline.h"
@@ -85,6 +86,68 @@ double quadSpline_eval( quadSpline* spline, double evalPt ){
 
   double interpVal = (spline -> funcVals[whichInterval]) + ptsDiff*((spline -> firstCoeff[whichInterval]) + ptsDiff*(spline -> secondCoeff[whichInterval]));
   return interpVal;
+}
+
+
+double quadSpline_eval_deriv( quadSpline* spline, double evalPt ){
+  //  ------------------------------------------------------------------------------
+  /*  Do quadratic spline interpolation og function derivative, using an already
+      initiallized quadSpline* struct. The quadSpline* struct may be initiallized
+      using quadSpline_init(). The quadratic interpolant is computed at the evaluation
+      pointt evalPt.
+
+      ¤ quadSpline*       : A pointer to an initiallized quadSpline struct,
+                            initiallized using quadSpline_init()
+      ¤ double*   evalPt  : Point at which to evaluate interpolant at
+
+      Returns: The function value of the interpolant derivative at evalPt.                      */
+  //  ------------------------------------------------------------------------------
+  assert( (evalPt >=  (spline -> pts[0])) && (evalPt <= (spline -> pts[spline -> numOfPts -1])) );
+
+  //  Use a binary search to determine which subinterval evalPt is in
+  int whichInterval = binarySearch(spline -> numOfPts, spline -> pts, evalPt);
+  double ptsDiff = evalPt - (spline -> pts[whichInterval]);
+
+  double interpVal = (spline -> firstCoeff[whichInterval]) + 2*ptsDiff*(spline -> secondCoeff[whichInterval]);
+  return interpVal;
+}
+
+
+double quadSpline_eval_integ( quadSpline* spline, double evalPt ){
+  //  ------------------------------------------------------------------------------
+  /*  Integrate quadratic spline interpolation from a set of known points (x_i, f(x_i))
+      using a binary search method. This asumes the dataset is an ordered array.
+      Otherwise use sorting before passing to the function.
+
+      ¤ int       numOfPts  : The number of points to interpolate in.
+      ¤ double*   pts       : A pointer to an array of doubles,
+                              the known points {x_i}.
+      ¤ double*   funcVals  : A pointer to an array of doubles,
+                              the corresponding function values {f(x_i)}
+      ¤ double    evalPt    : The query point, double values at which to evaluate
+                              the interpolant.
+
+      Returns: A double P(evalPt), where P() is the interpolant function integrated  */
+  //  ------------------------------------------------------------------------------
+
+  //  Use a binary search to determine which subinterval evalPt is in
+  int whichInterval   =  binarySearch((spline -> numOfPts), (spline -> pts), evalPt);
+
+  double integral = 0;
+  double ptsDiff;
+  for ( int Id = 0; Id <= whichInterval; Id++ ){
+
+    // Note: pow(x, 2) is slower than x*x in principle, but they are definitively comparable below 1e6 elements
+    if ( Id < whichInterval ){
+      ptsDiff = ((spline -> pts[Id + 1]) - (spline -> pts[Id]));
+    }
+    else {
+      ptsDiff = ( evalPt - (spline -> pts[Id]) );
+    }
+    integral += (spline -> funcVals[Id]) * ptsDiff + (spline -> firstCoeff[Id]) * ptsDiff * ptsDiff / 2 + (spline -> secondCoeff[Id]) * ptsDiff * ptsDiff * ptsDiff / 3;
+  }
+
+  return integral;
 }
 
 

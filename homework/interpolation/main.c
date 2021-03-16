@@ -98,12 +98,14 @@ int main( int argc, char* argv[]) {
 
   for ( double evalPt = xData[0]; evalPt < xData[numOfPts]; evalPt += resolution ){
 
-    double interp_tmp        =  quadSpline_eval( spline_quad, evalPt );
-    double interp_gsl_tmp     =  gsl_interp_eval(gslInterp_quad,  xData, yData,           evalPt, NULL );
-    //interp_integ_tmp     =  linSplineIntInterp(     numOfPts,       xData, yData,           evalPt       );
-    //interp_integ_gsl_tmp  =  gsl_interp_eval_integ(  gslInterp_lin,   xData, yData, xData[0], evalPt, NULL );
+    double interp_tmp            =  quadSpline_eval(        spline_quad, evalPt );
+    double interp_gsl_tmp        =  gsl_interp_eval(        gslInterp_quad,  xData, yData,           evalPt, NULL );
+    double interp_integ_tmp      =  quadSpline_eval_integ(  spline_quad, evalPt       );
+    double interp_integ_gsl_tmp  =  gsl_interp_eval_integ(  gslInterp_quad,   xData, yData, xData[0], evalPt, NULL );
+    double interp_deriv_tmp      =  quadSpline_eval_deriv(  spline_quad, evalPt       );
+    double interp_deriv_gsl_tmp  =  gsl_interp_eval_deriv(  gslInterp_quad,   xData, yData, evalPt, NULL );
 
-    fprintf(outFileStream_quad, "%g\t%g\t%g\n", evalPt, interp_tmp, interp_gsl_tmp);//, interp_integ_tmp, interp_integ_gsl_tmp);
+    fprintf(outFileStream_quad, "%g\t%g\t%g\t%g\t%g\t%g\t%g\n", evalPt, interp_tmp, interp_gsl_tmp, interp_integ_tmp, interp_integ_gsl_tmp, interp_deriv_tmp, interp_deriv_gsl_tmp);
   }
   // ___________________________________________________________________________
 
@@ -112,12 +114,14 @@ int main( int argc, char* argv[]) {
 
   for ( double evalPt = xData[0]; evalPt < xData[numOfPts]; evalPt += resolution ){
 
-    double interp_tmp      =  cubicSpline_eval( spline_cubic, evalPt );
-    double interp_gsl_tmp  =  gsl_interp_eval(gslInterp_cubic,  xData, yData,           evalPt, NULL );
-    //interp_integ_tmp     =  linSplineIntInterp(     numOfPts,       xData, yData,           evalPt       );
-    //interp_integ_gsl_tmp  =  gsl_interp_eval_integ(  gslInterp_lin,   xData, yData, xData[0], evalPt, NULL );
+    double interp_tmp             =  cubicSpline_eval( spline_cubic, evalPt );
+    double interp_gsl_tmp         =  gsl_interp_eval(gslInterp_cubic,  xData, yData,           evalPt, NULL );
+    double interp_integ_tmp       =  cubicSpline_eval_integ(  spline_cubic, evalPt       );
+    double interp_integ_gsl_tmp   =  gsl_interp_eval_integ(  gslInterp_cubic,   xData, yData, xData[0], evalPt, NULL );
+    double interp_deriv_tmp       =  cubicSpline_eval_deriv(  spline_cubic, evalPt       );
+    double interp_deriv_gsl_tmp   =  gsl_interp_eval_deriv(  gslInterp_cubic,   xData, yData, evalPt, NULL );
 
-    fprintf(outFileStream_cubic, "%g\t%g\t%g\n", evalPt, interp_tmp, interp_gsl_tmp);//, interp_integ_tmp, interp_integ_gsl_tmp);
+    fprintf(outFileStream_cubic, "%g\t%g\t%g\t%g\t%g\t%g\t%g\n", evalPt, interp_tmp, interp_gsl_tmp, interp_integ_tmp, interp_integ_gsl_tmp, interp_deriv_tmp, interp_deriv_gsl_tmp);
   }
   // ___________________________________________________________________________
 

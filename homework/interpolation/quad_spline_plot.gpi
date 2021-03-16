@@ -7,6 +7,10 @@ set xlabel "$x$"
 set ylabel "$S_i(x)$"
 set title "$\cos(x)$ quadratic spline"
 set output "quad_spline_plot.png"
-plot "quad_spline_output.txt" using 1:2 with line lw 3 col PineGreen title "Interpolant" \
-,"quad_spline_output.txt" using 1:3 with line lw 1 col SeaGreen title "Interpolant by GSL" \
+plot "quad_spline_output.txt" using 1:2 with line lw 6 col PineGreen title "Interpolant" \
+,"quad_spline_output.txt" using 1:3 with line lw 2 col SpringGreen title "Interpolant by GSL" \
+,"quad_spline_output.txt" using 1:4 with line lw 6 col BlueViolet title "Interpolant integral" \
+,"quad_spline_output.txt" using 1:5 with line lw 2 col ProcessBlue title "Interpolant integral by GSL" \
+,"quad_spline_output.txt" using 1:6 with line lw 6 col Mahogany title "Interpolant derivative" \
+,"quad_spline_output.txt" using 1:7 with line lw 2 col Salmon title "Interpolant derivative by GSL" \
 , "cos_tabulated.txt" using 1:2 with points col Black pointtype 2 title "Tabulated data"

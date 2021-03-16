@@ -14,6 +14,8 @@ typedef struct { int      numOfPts    ; /* n   */
 
 cubicSpline* cubicSpline_init( int numOfPts, double* pts, double* funcVals );
 double cubicSpline_eval( cubicSpline* spline, double evalPt );
+double cubicSpline_eval_integ( cubicSpline* spline, double evalPt );
+double cubicSpline_eval_deriv( cubicSpline* spline, double evalPt );
 void cubicSpline_free(cubicSpline* spline);
 
 #endif

@@ -12,6 +12,8 @@ typedef struct { int      numOfPts    ; /* n   */
 
 quadSpline* quadSpline_init( int numOfPts, double* pts, double* funcVals );
 double quadSpline_eval( quadSpline* spline, double evalPt );
+double quadSpline_eval_deriv( quadSpline* spline, double evalPt );
+double quadSpline_eval_integ( quadSpline* spline, double evalPt );
 void quadSpline_free( quadSpline* spline );
 
 #endif
