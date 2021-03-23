@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "input2Array.h"
 
-void inputToArray(double* XData, double* YData, char* inputFilename ){
+void input2Array(double* XData, double* YData, char* inputFilename ){
   int numOfReturnVals = 2;  // The return value of fscanf() is the number of fetched variables
 
   int    input = numOfReturnVals; 			// Input will receive the return value from fscanf
@@ -27,5 +28,4 @@ void inputToArray(double* XData, double* YData, char* inputFilename ){
   }
 
   fclose(myInputFileStream);
-
 }
