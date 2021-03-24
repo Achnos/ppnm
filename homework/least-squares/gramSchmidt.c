@@ -62,7 +62,11 @@ void gramSchmidt_decomp( gsl_matrix* matrixToQR, gsl_matrix* inputTriangularMatr
       gsl_matrix_set_col(matrixToQR, nextColId, nextCol);                           //  Go back and set the j'th (nextColId) column of A (matrixToQR)
                                                                                     //  equal to the column from before. This makes all the reamining columns of
                                                                                     //  A (matrixToQR), from j = i + 1,, orthogonal to the i'th orhogonal column q_i
+      gsl_vector_free(nextCol);
+      gsl_vector_free(ortColScaled);
     }
+    gsl_vector_free(col);
+    gsl_vector_free(orthgnMatCol);
   }
 }
 
@@ -71,8 +75,85 @@ void gramSchmidt_solve( gsl_matrix* orthogonalMatrix  ,
                         gsl_matrix* triangularMatrix  ,
                         gsl_vector* rhsVec            ,
                         gsl_vector* var                 ){
+  /*  Method to solve Ax = b, for an A that has been decomposed into
+   *  a QR decomposition, using gramSchmidt_decomp().
+   *  A is an n x m matrix, Q is an n x m orthogonal matrix
+   *  Q^T * Q = 1_[n x m], and R is an upper triangular matrix.
+   *  b is a vector of dimension n x 1
+   *
+   *  ¤ gsl_matrix* orthogonalMatrix : Q, the orthogonal matrix of size
+   *                                   n x m
+   *  ¤ gsl_matrix* triangularMatrix : R, the upper triangular matrix
+   *                                   of size m x m
+   *  ¤ gsl_vector* rhsVec           : b, the right hand side vector of
+   *                                   size n x 1
+   *  ¤ gsl_vector* var              : Vector to hold the solution x
+   *                                   of size m x 1
+   *
+   *  Returns: Void. Fills var with solution vector x
+   */
 
   gsl_blas_dgemv(CblasTrans, 1.0, orthogonalMatrix, rhsVec, 0.0, var);
   backsub(triangularMatrix, var);
 
+}
+
+
+void gramSchmidt_inverse( gsl_matrix* orthogonalMatrix  ,
+                          gsl_matrix* triangularMatrix  ,
+                          gsl_matrix* inverseMatrix      ){
+  /*  Method to compute inverse of matrix A, from linear system of equations
+   *  Ax = b, where A is a square matrix, that has been decomposed using a
+   *  QR decomposition A = QR
+   *  A is an n x m matrix, Q is an n x m orthogonal matrix
+   *  Q^T * Q = 1_[n x m], and R is an upper triangular matrix.
+   *  b is a vector of dimension n x 1
+   *
+   *  ¤ gsl_matrix* orthogonalMatrix : Q, the orthogonal matrix of size
+   *                                   n x m
+   *  ¤ gsl_matrix* triangularMatrix : R, the upper triangular matrix
+   *                                   of size m x m
+   *  ¤ gsl_vector* inverseMatrix    : Matrix to hold the inverse A^-1
+   *
+   *  Returns: Void. Fills inverseMatrix with the inverse in question.
+   */
+
+  int numOfDims = (triangularMatrix -> size1);
+
+  gsl_matrix* triangInverse  =  gsl_matrix_alloc(numOfDims, numOfDims);
+  gsl_vector* unitVec        =  gsl_vector_alloc(numOfDims);
+
+  for (int dim = 0; dim < numOfDims; dim++ ){
+    gsl_vector_set_basis(unitVec, dim);
+    backsub(triangularMatrix, unitVec);
+    gsl_matrix_set_col(triangInverse, dim, unitVec);
+  }
+
+  gsl_blas_dgemm(CblasNoTrans, CblasTrans, 1, triangInverse, orthogonalMatrix, 0, inverseMatrix);
+
+  gsl_matrix_free(triangInverse);
+  gsl_vector_free(unitVec);
+}
+
+void gramSchmidt_inverseTriang( gsl_matrix* triangularMatrix, gsl_matrix* inverseMatrix      ){
+    /*  Method to compute inverse of an upper triangular matrix R, that is from a
+     *  QR decomposition A = QR
+     *
+     *  ¤ gsl_matrix* triangularMatrix : R, the upper triangular matrix
+     *                                   of size m x m
+     *  ¤ gsl_vector* inverseMatrix    : Matrix to hold the inverse A^-1
+     *
+     *  Returns: Void. Fills inverseMatrix with the inverse in question.
+     */
+
+    int numOfDims        =  (triangularMatrix -> size1);
+    gsl_vector* unitVec  =  gsl_vector_alloc(numOfDims);
+
+    for (int dim = 0; dim < numOfDims; dim++ ){
+        gsl_vector_set_basis(unitVec, dim);
+        backsub(triangularMatrix, unitVec);
+        gsl_matrix_set_col(inverseMatrix, dim, unitVec);
+    }
+
+    gsl_vector_free(unitVec);
 }

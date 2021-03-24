@@ -6,6 +6,20 @@
 
 #include "input2Array.h"
 #include "gramSchmidt.h"
+#include "leastSquares.h"
+
+void compute_deviations(int numOfPts, double* yData, double* yDev){
+    for (int dev = 0; dev < numOfPts; dev++){
+        yDev[dev] = yData[dev]/20;
+    }
+}
+
+void log_featureTransform( int numOfPts, double* yData, double* yDataTrans, double* yDev, double* yDevTrans ){
+    for (int id = 0; id < numOfPts; id++ ){
+        yDataTrans[id]  =  log(yData[id]);
+        yDevTrans[id]        =  yDev[id] / yData[id];
+    }
+}
 
 double funcs(int order, double x){
 	switch(order){
@@ -15,29 +29,6 @@ double funcs(int order, double x){
 		default: return NAN;
 	}
 }
-
-void compute_deviations(int numOfPts, double* yData, double* yDev){
-  for (int dev = 0; dev < numOfPts; dev++){
-    yDev[dev] = yData[dev]/20;
-  }
-}
-
-void set_data(int numOfPts        ,
-              int numOfFuncs      ,
-              gsl_matrix* dataMat ,
-              gsl_vector* dataVec ,
-              double* xData       ,
-              double* yData       ,
-              double* yDev         ){
-  for (int row = 0; row < numOfPts; row++){
-    for (int col = 0; col < numOfFuncs; col++){
-      gsl_matrix_set(dataMat, row, col, funcs(col, xData[row])/yDev[row]);
-    }
-    gsl_vector_set(dataVec, row, yData[row]/yDev[row]);
-  }
-}
-
-
 
 
 int main (int argc, char* argv[]){
@@ -54,23 +45,21 @@ int main (int argc, char* argv[]){
   char* inputFilename  =  argv[1];
   FILE* outFileStream  =  fopen(argv[2], "w");
 
-  double* xData  =  malloc( numOfPts*sizeof(double) );
-  double* yData  =  malloc( numOfPts*sizeof(double) );
-  double* yDev   =  malloc( numOfPts*sizeof(double) );
+  double* xData       =  malloc( numOfPts*sizeof(double) );
+  double* yData       =  malloc( numOfPts*sizeof(double) );
+  double* yDataTrans  =  malloc( numOfPts*sizeof(double) );
+  double* yDev        =  malloc( numOfPts*sizeof(double) );
+  double* yDevTrans   =  malloc( numOfPts*sizeof(double) );
 
-	input2Array( xData, yData, inputFilename );
+  input2Array( xData, yData, inputFilename );
   compute_deviations( numOfPts, yData, yDev);
+  log_featureTransform( numOfPts, yData, yDataTrans, yDev, yDevTrans );
 
   gsl_matrix* dataMat    =  gsl_matrix_alloc(numOfPts,   numOfFuncs);
-  gsl_matrix* ortgMat    =  gsl_matrix_alloc(numOfPts,   numOfFuncs);
-  gsl_matrix* triangMat  =  gsl_matrix_alloc(numOfFuncs, numOfFuncs);
   gsl_vector* dataVec    =  gsl_vector_alloc(numOfPts              );
   gsl_vector* coeffsVec  =  gsl_vector_alloc(numOfFuncs            );
 
-  set_data(numOfPts, numOfFuncs, dataMat, dataVec, xData, yData, yDev);
-  gsl_matrix_memcpy(ortgMat, dataMat);
-  gramSchmidt_decomp(ortgMat, triangMat);
-  gramSchmidt_solve( ortgMat, triangMat, dataVec, coeffsVec);
+  leastSquares( numOfPts, numOfFuncs, dataMat, dataVec, coeffsVec, &funcs, xData, yDataTrans, yDevTrans );
 
   return 0;
 }
