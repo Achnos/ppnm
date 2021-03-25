@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_blas.h>
 
@@ -48,4 +50,32 @@ void print_matrix(int numOfRows, gsl_matrix* matrixToPrint, char* string ){
   	}
     printf("\n");
   }
+}
+
+
+void compute_deviations(int numOfPts, double* yData, double* yDev){
+    for (int dev = 0; dev < numOfPts; dev++){
+        yDev[dev] = yData[dev]/20.0;
+    }
+}
+
+void log_featureTransform( int numOfPts, double* yData, double* yDataTrans, double* yDev, double* yDevTrans ){
+    for (int id = 0; id < numOfPts; id++ ){
+        yDataTrans[id]  =  log(yData[id]);
+        yDevTrans[id]   =  yDev[id] / yData[id];
+    }
+}
+
+void coeffs_exp_featureTransform(gsl_vector* coeffsVec, gsl_matrix* covMat){
+    gsl_vector_set(coeffsVec, 0, exp( gsl_vector_get(coeffsVec, 0) ));
+    gsl_matrix_set(covMat, 0, 0, exp( gsl_matrix_get(covMat, 0,0) ));
+}
+
+
+void write_coeffs(char* outputFilename, double lambda, double scale, double scale_err, double lambda_err){
+    FILE* outFileStream  =  fopen(outputFilename, "w");
+    fprintf(outFileStream, "a = %g\nlambda = %g\n", scale, lambda);
+    fprintf(outFileStream, "dap = %g\ndlambdap = %g\n", scale + scale_err, lambda + lambda_err);
+    fprintf(outFileStream, "dam = %g\ndlambdam = %g\n", scale - scale_err, lambda - lambda_err);
+    fclose(outFileStream);
 }
