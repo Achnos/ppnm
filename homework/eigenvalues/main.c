@@ -20,10 +20,7 @@ int main(int argc, char* argv[]){
 
     print_matrix(dims, matrix, "Symmetric matrix A before diagonalization:");
     jacobiDiag(eigValMat, eigVecMat);
-
-    //
-    // gsl_blas_dgemm(Cblas)
-
+    
     gsl_matrix* tmp             =  gsl_matrix_alloc(dims, dims);
     gsl_matrix* testIdentity    =  gsl_matrix_alloc(dims, dims);
     gsl_matrix* testDiag        =  gsl_matrix_alloc(dims, dims);
