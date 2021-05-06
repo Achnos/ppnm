@@ -4,8 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/diffClock.c" "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles/eigenvalues.dir/diffClock.c.o"
   "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/jacobi.c" "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles/eigenvalues.dir/jacobi.c.o"
   "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/main.c" "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles/eigenvalues.dir/main.c.o"
+  "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/test_runtime.c" "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles/eigenvalues.dir/test_runtime.c.o"
   "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/utilities.c" "/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles/eigenvalues.dir/utilities.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

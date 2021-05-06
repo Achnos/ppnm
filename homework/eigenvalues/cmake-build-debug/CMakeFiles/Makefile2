@@ -74,12 +74,12 @@ preinstall:
 CMakeFiles/eigenvalues.dir/all:
 	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/depend
 	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4 "Built target eigenvalues"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target eigenvalues"
 .PHONY : CMakeFiles/eigenvalues.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/eigenvalues.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/eigenvalues.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/marc/Dropbox/repos/ppnm/homework/eigenvalues/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/eigenvalues.dir/rule

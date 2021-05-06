@@ -25,22 +25,14 @@ stdio.h
 -
 time.h
 -
-gsl/gsl_matrix.h
--
-gsl/gsl_blas.h
--
-jacobi.h
-/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/jacobi.h
-utilities.h
-/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/utilities.h
-
-/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/utilities.c
 math.h
 -
 gsl/gsl_matrix.h
 -
 gsl/gsl_blas.h
 -
+jacobi.h
+/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/jacobi.h
 utilities.h
 /home/marc/Dropbox/repos/ppnm/homework/eigenvalues/utilities.h
 

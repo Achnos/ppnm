@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/eigenvalues.dir/diffClock.c.o"
   "CMakeFiles/eigenvalues.dir/jacobi.c.o"
   "CMakeFiles/eigenvalues.dir/main.c.o"
+  "CMakeFiles/eigenvalues.dir/test_runtime.c.o"
   "CMakeFiles/eigenvalues.dir/utilities.c.o"
   "eigenvalues"
   "eigenvalues.pdb"

@@ -123,6 +123,33 @@ eigenvalues/fast:
 	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/build
 .PHONY : eigenvalues/fast
 
+diffClock.o: diffClock.c.o
+
+.PHONY : diffClock.o
+
+# target to build an object file
+diffClock.c.o:
+	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/diffClock.c.o
+.PHONY : diffClock.c.o
+
+diffClock.i: diffClock.c.i
+
+.PHONY : diffClock.i
+
+# target to preprocess a source file
+diffClock.c.i:
+	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/diffClock.c.i
+.PHONY : diffClock.c.i
+
+diffClock.s: diffClock.c.s
+
+.PHONY : diffClock.s
+
+# target to generate assembly for a file
+diffClock.c.s:
+	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/diffClock.c.s
+.PHONY : diffClock.c.s
+
 jacobi.o: jacobi.c.o
 
 .PHONY : jacobi.o
@@ -177,6 +204,33 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/main.c.s
 .PHONY : main.c.s
 
+test_runtime.o: test_runtime.c.o
+
+.PHONY : test_runtime.o
+
+# target to build an object file
+test_runtime.c.o:
+	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/test_runtime.c.o
+.PHONY : test_runtime.c.o
+
+test_runtime.i: test_runtime.c.i
+
+.PHONY : test_runtime.i
+
+# target to preprocess a source file
+test_runtime.c.i:
+	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/test_runtime.c.i
+.PHONY : test_runtime.c.i
+
+test_runtime.s: test_runtime.c.s
+
+.PHONY : test_runtime.s
+
+# target to generate assembly for a file
+test_runtime.c.s:
+	$(MAKE) -f CMakeFiles/eigenvalues.dir/build.make CMakeFiles/eigenvalues.dir/test_runtime.c.s
+.PHONY : test_runtime.c.s
+
 utilities.o: utilities.c.o
 
 .PHONY : utilities.o
@@ -213,12 +267,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... eigenvalues"
 	@echo "... edit_cache"
+	@echo "... diffClock.o"
+	@echo "... diffClock.i"
+	@echo "... diffClock.s"
 	@echo "... jacobi.o"
 	@echo "... jacobi.i"
 	@echo "... jacobi.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... test_runtime.o"
+	@echo "... test_runtime.i"
+	@echo "... test_runtime.s"
 	@echo "... utilities.o"
 	@echo "... utilities.i"
 	@echo "... utilities.s"

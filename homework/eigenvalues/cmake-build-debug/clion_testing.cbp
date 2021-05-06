@@ -76,6 +76,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/diffClock.c">
+			<Option target="eigenvalues"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/diffClock.h">
+			<Option target="eigenvalues"/>
+		</Unit>
 		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/jacobi.c">
 			<Option target="eigenvalues"/>
 		</Unit>
@@ -83,6 +89,9 @@
 			<Option target="eigenvalues"/>
 		</Unit>
 		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/main.c">
+			<Option target="eigenvalues"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/test_runtime.c">
 			<Option target="eigenvalues"/>
 		</Unit>
 		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/eigenvalues/utilities.c">
