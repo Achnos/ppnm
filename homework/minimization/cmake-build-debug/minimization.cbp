@@ -87,6 +87,12 @@
 		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/minimization/CMakeLists.txt">
 			<Option target="minimization"/>
 		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/minimization/input2Array.c">
+			<Option target="minimization"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/minimization/input2Array.h">
+			<Option target="minimization"/>
+		</Unit>
 		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/minimization/main.c">
 			<Option target="minimization"/>
 		</Unit>

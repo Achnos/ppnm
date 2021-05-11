@@ -10,9 +10,7 @@
 #include<gsl/gsl_blas.h>
 #include<float.h>
 
-#ifndef DBL_EPSILON
-#define DBL_EPSILON 2.22045e-16
-#endif
+#define MY_DBL_EPSILON 2.22045e-10 // I had to experiment a bit with this. My i5 machine didn't seem to obtain the correct precision
 
 #include "minimization.h"
 
@@ -20,12 +18,11 @@
 #include <gsl/gsl_matrix.h>
 
 void numeric_gradient (double func(gsl_vector*), gsl_vector* minimum, gsl_vector* gradient){
-    double stepSize =   sqrt(DBL_EPSILON);
-
+    long double stepSize =  MY_DBL_EPSILON;
     double funcVal  =   func(minimum);
     int numOfDims   =   minimum -> size;
 
-    for(int dimId=0; dimId < numOfDims; ++dimId){
+    for(int dimId = 0; dimId < numOfDims; ++dimId){
         double step;
         double minimum_i   =   gsl_vector_get(minimum, dimId);
 
@@ -43,7 +40,7 @@ void numeric_gradient (double func(gsl_vector*), gsl_vector* minimum, gsl_vector
 }
 
 void quasi_newtonMethod(double func(gsl_vector*), gsl_vector* minimum, double tolerance){
-    double stepSize = sqrt(DBL_EPSILON);
+    double stepSize = MY_DBL_EPSILON;
     int dimensions = minimum -> size;
 
     int numOfSteps      =   0;
@@ -68,7 +65,7 @@ void quasi_newtonMethod(double func(gsl_vector*), gsl_vector* minimum, double to
     double funcVal  =  func(minimum);
     double funcVal_next;
 
-    while(numOfSteps < 1000){
+    while(numOfSteps < 1e4){
         numOfSteps++;
 
         gsl_blas_dgemv(CblasNoTrans, -1, inverse_hessianMatrix, gradientVal, 0, newtonStep);
@@ -137,4 +134,161 @@ void quasi_newtonMethod(double func(gsl_vector*), gsl_vector* minimum, double to
 
     fprintf(stderr, "quasi_newtonMethod: \n  number of steps = %i,\n  number of scales = %i,\n  number of hessian matrix resets = %i\n  f(x) = %.1e\n\n", numOfSteps, numOfScales, numOfResets, funcVal);
 
+}
+
+void simplex_reflection(const double* highest_pt , const double* centroid_pt, int dimensions, double* reflected_pt ){
+    for(int dimId = 0; dimId < dimensions ; ++dimId) {
+        reflected_pt[dimId]    = 2 * centroid_pt[dimId] - highest_pt[dimId];
+    }
+}
+
+void simplex_expansion(const double* highest_pt, const double* centroid_pt , int dimensions , double* expanded_pt ){
+    for(int dimId = 0; dimId < dimensions ; ++dimId)  {
+        expanded_pt[dimId]     = 3 * centroid_pt[dimId] - 2 * highest_pt[dimId];
+    }
+}
+
+void simplex_contraction(const double* highest_pt, const double* centroid_pt, int dimensions , double* contracted_pt ){
+    for(int dimId = 0; dimId < dimensions ; ++dimId) {
+        contracted_pt[dimId]   = 0.5 * centroid_pt[dimId] + 0.5 * highest_pt[dimId];
+    }
+}
+
+void simplex_reduction(double** simplex, int dimensions, int low_ptId ){
+    for(int ptId = 0; ptId < dimensions + 1; ++ptId) {
+        if(ptId != low_ptId ) {
+            for (int dimId = 0; dimId < dimensions; ++dimId) {
+                simplex[ptId][dimId] = 0.5 * (simplex[ptId][dimId] + simplex[low_ptId][dimId]);
+            }
+        }
+    }
+}
+
+double simplex_distance (double* first_pt , double* second_pt, int dimensions){
+    double euclidean_distance = 0;
+    for(int dimId = 0; dimId < dimensions ; dimId++)  {
+        euclidean_distance += pow (second_pt[dimId] - first_pt[dimId], 2);
+    }
+    return sqrt(euclidean_distance);
+}
+double simplex_size(double** simplex, int dimensions ){
+    double tmp_distance = 0;
+    for(int ptId = 1; ptId < dimensions + 1; ++ptId){
+        double dist = simplex_distance(simplex[0], simplex[ptId], dimensions) ;
+        if(dist > tmp_distance){
+            tmp_distance = dist;
+        }
+    }
+    return tmp_distance;
+}
+
+void simplex_update (double** simplex, const double* funcVals, int dimensions , int* high_ptId , int* low_ptId , double* centroid_pt) {
+    *high_ptId  =   0;
+    *low_ptId   =   0;
+
+    double highest_pt  =   funcVals[0];     // The function value of the point that has the highest function value
+    double lowest_pt   =   funcVals[0];     // And the function value of the point that has the lowest function value
+
+    // Find the highest and lowest points
+    for (int ptId = 1; ptId < dimensions + 1; ++ptId) {
+        double next_pt = funcVals[ptId];
+        if (next_pt > highest_pt) {
+            highest_pt = next_pt;
+            *high_ptId = ptId;
+        }
+        if (next_pt < lowest_pt) {
+            lowest_pt = next_pt;
+            *low_ptId = ptId;
+        }
+    }
+
+    // Find the centroid point
+    for (int dimId = 0; dimId < dimensions; ++dimId) {
+        double sum = 0;
+        for (int ptId = 0; ptId < dimensions + 1; ++ptId) {
+            if (ptId != *high_ptId) {
+                sum += simplex[ptId][dimId];
+            }
+        }
+        centroid_pt[dimId] = sum / dimensions;
+    }
+}
+
+void simplex_initiate (double func(double*), double** simplex, double* funcVals, int dimensions, int* high_ptId, int* low_ptId, double* centroid_pt ){
+    for(int ptId = 0; ptId < dimensions + 1; ++ptId) {
+        funcVals[ptId] = func(simplex[ptId]);
+    }
+    simplex_update(simplex, funcVals, dimensions, high_ptId, low_ptId, centroid_pt);
+}
+
+int downhillsimplex (double func(double*), double** simplex , int dimensions , double simplex_sizeGoal ){
+    int high_ptId;
+    int low_ptId;
+    int numOfSteps = 0;
+
+    double centroid[dimensions];
+    double funcVals[dimensions + 1];
+    double reflectedPt[dimensions];
+    double expandedPt[dimensions];
+
+    simplex_initiate(func, simplex, funcVals, dimensions, &high_ptId, &low_ptId, centroid) ;
+
+    while(simplex_size(simplex, dimensions) > simplex_sizeGoal){
+        simplex_update(simplex, funcVals, dimensions, &high_ptId, &low_ptId, centroid);
+
+        // Try a reflection
+        simplex_reflection(simplex[high_ptId], centroid, dimensions, reflectedPt) ;
+        double funcVal_reflected = func(reflectedPt);
+
+        if(funcVal_reflected < funcVals[low_ptId]){
+            //  Reflection looks good, try expansion
+            simplex_expansion(simplex[high_ptId], centroid, dimensions, expandedPt);
+            double funcVal_expanded = func(expandedPt);
+
+            if(funcVal_expanded < funcVal_reflected){
+                // Accept expansion
+                for(int dimId = 0; dimId < dimensions; ++dimId) {
+                    simplex[high_ptId][dimId] = expandedPt[dimId];
+                }
+                funcVals[high_ptId] = funcVal_expanded;
+            }
+            else{
+                // Reject expansion and accept reflection
+                for(int dimId = 0; dimId < dimensions; ++dimId){
+                    simplex[high_ptId][dimId] = reflectedPt[dimId];
+                }
+                funcVals[high_ptId] = funcVal_reflected;
+            }
+        }
+        else{
+            // Reflection wasn’t good
+            if(funcVal_reflected < funcVals[high_ptId]){
+                // Ok, accept reflection
+                for(int dimId = 0; dimId < dimensions; ++dimId) {
+                    simplex[high_ptId][dimId] = reflectedPt[dimId];
+                }
+                funcVals[high_ptId] = funcVal_reflected;
+            }
+            else{
+                // Try  contraction
+                simplex_contraction(simplex[high_ptId], centroid, dimensions, reflectedPt);
+                double funcVal_contracted = func(reflectedPt);
+
+                if(funcVal_contracted < funcVals[high_ptId]){
+                    // Accept contraction
+                    for(int dimId = 0; dimId < dimensions; ++dimId){
+                        simplex[high_ptId][dimId]=reflectedPt[dimId];
+                    }
+                    funcVals[high_ptId] = funcVal_contracted;
+                }
+                else{
+                    // Do reduction
+                    simplex_reduction(simplex, dimensions, low_ptId);
+                    simplex_initiate(func, simplex, funcVals, dimensions, &high_ptId, &low_ptId, centroid);
+                }
+            }
+        }
+        numOfSteps++;
+    }
+    return numOfSteps ;
 }

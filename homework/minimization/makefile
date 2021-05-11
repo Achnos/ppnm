@@ -7,21 +7,18 @@ PIPE    =  cat
 PLTUTIL =  pyxplot
 
 EXE   	=  main
-OBJ  	=  main.o minimization.o
-HDRS    =  minimization.h
+OBJ  	=  main.o minimization.o input2Array.o
+HDRS    =  minimization.h input2Array.h
 TXT     =  output.txt
-IMGFL   =  plot.png
-GPI     =  plot.gpi
-DATA    =  data.txt
+IMGFL   =  higgs_fit.png
+GPI     =  higgs_fit.gpi
+DATA    =  higgs_fit.txt
 
 .PHONEY: default
-default: print #$(IMGFL)
+default: print $(IMGFL)
 
-#hydrogen_plot.png: $(HGPI) $(HDATA)
-#	pyxplot $<
-
-#convergence_plot.png: $(CGPI) $(CDATA)
-#	pyxplot $<
+higgs_fit.png: $(GPI) $(DATA)
+	pyxplot $<
 
 print: $(TXT)
 #	$(PIPE) $<

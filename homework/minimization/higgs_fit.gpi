@@ -1,0 +1,10 @@
+set terminal png
+set title "Higgs boson detection"
+set xlabel "$E$ in units of GeV"
+set ylabel "$\sigma$"
+set key outside
+set output "higgs_fit.png"
+set grid
+set tics in
+plot "higgs_fit.txt" using 1:4 with line linewidth 3 col MidnightBlue title "Fit"\
+, "higgs_fit.txt" using 1:2:3 with yerrorbars col Black pointtype 2 title "Datapoints"

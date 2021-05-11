@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/marc/Dropbox/repos/ppnm/homework/minimization/input2Array.c" "/home/marc/Dropbox/repos/ppnm/homework/minimization/cmake-build-debug/CMakeFiles/minimization.dir/input2Array.c.o"
   "/home/marc/Dropbox/repos/ppnm/homework/minimization/main.c" "/home/marc/Dropbox/repos/ppnm/homework/minimization/cmake-build-debug/CMakeFiles/minimization.dir/main.c.o"
   "/home/marc/Dropbox/repos/ppnm/homework/minimization/minimization.c" "/home/marc/Dropbox/repos/ppnm/homework/minimization/cmake-build-debug/CMakeFiles/minimization.dir/minimization.c.o"
   )

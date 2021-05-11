@@ -123,6 +123,33 @@ minimization/fast:
 	$(MAKE) -f CMakeFiles/minimization.dir/build.make CMakeFiles/minimization.dir/build
 .PHONY : minimization/fast
 
+input2Array.o: input2Array.c.o
+
+.PHONY : input2Array.o
+
+# target to build an object file
+input2Array.c.o:
+	$(MAKE) -f CMakeFiles/minimization.dir/build.make CMakeFiles/minimization.dir/input2Array.c.o
+.PHONY : input2Array.c.o
+
+input2Array.i: input2Array.c.i
+
+.PHONY : input2Array.i
+
+# target to preprocess a source file
+input2Array.c.i:
+	$(MAKE) -f CMakeFiles/minimization.dir/build.make CMakeFiles/minimization.dir/input2Array.c.i
+.PHONY : input2Array.c.i
+
+input2Array.s: input2Array.c.s
+
+.PHONY : input2Array.s
+
+# target to generate assembly for a file
+input2Array.c.s:
+	$(MAKE) -f CMakeFiles/minimization.dir/build.make CMakeFiles/minimization.dir/input2Array.c.s
+.PHONY : input2Array.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -186,6 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... minimization"
 	@echo "... edit_cache"
+	@echo "... input2Array.o"
+	@echo "... input2Array.i"
+	@echo "... input2Array.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

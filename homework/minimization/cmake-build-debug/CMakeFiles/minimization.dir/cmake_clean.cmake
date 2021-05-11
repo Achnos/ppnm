@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/minimization.dir/input2Array.c.o"
   "CMakeFiles/minimization.dir/main.c.o"
   "CMakeFiles/minimization.dir/minimization.c.o"
   "minimization"

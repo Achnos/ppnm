@@ -10,7 +10,10 @@ add_executable(minimization
         main.c
         makefile
         minimization.c
-        minimization.h)
+        minimization.h
+        input2Array.h
+        input2Array.c
+        )
 
 find_package(GSL REQUIRED)    # See below (2)
 target_link_libraries(minimization GSL::gsl GSL::gslcblas)
