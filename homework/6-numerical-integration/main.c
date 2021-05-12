@@ -41,6 +41,9 @@ int main(int argc, char* argv[]){
 
     double exactVal     =   2.0/3.0;
     print_whichTest("∫_0^1 dx √(x) = 2/3 =", exactVal);
+    
+    /* Please never use inline functions... In this case it is an easy, dirty, workaround 
+     * but should generally be avoided */
     double firstTestFunc ( double x ){
         numOfCalls++;
         return sqrt( x ) ;
