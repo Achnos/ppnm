@@ -23,7 +23,7 @@ integrated_error_function_plot.png: output_erfint.txt
 	set ylabel "Function value at query points (Y data)";\
 	set title "erf(x) from integral rep.";\
 	plot \
-	"$<" using 1:3 with line lw 2 col Black title "erf(x) (math.h)"\
+	"$<" using 1:3 with line lw 6 col PineGreen title "erf(x) (math.h)"\
 	, "$<" using 1:2 with line lw 2 col Seagreen title "My erf(x)"\
 	' | pyxplot
 

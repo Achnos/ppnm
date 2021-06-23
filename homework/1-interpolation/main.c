@@ -46,7 +46,14 @@ int main( int argc, char* argv[]) {
     exit(-1);
   }
 
-  // __ Hyperparameters ________________________________________________________
+  printf( "\n###############################  " );
+  printf( "\n# ------ INTERPOLATION ------ #  " );
+  printf( "\n###############################\n" );
+  printf("\n-- A) Linear spline (linear interpolation) --\n");
+  printf("\n¤ The resultant interpolants are seen in the plot \"lin_spline_plot.png\"\n");
+
+
+    // __ Hyperparameters ________________________________________________________
   int numOfPts      =  20;
   int numOfSamples  =  (int)1e3;
 
@@ -68,6 +75,8 @@ int main( int argc, char* argv[]) {
 
   // __ Definite integral ______________________________________________________
   // Compute the definite integral and compare with GSL routines to make sure data is sensical
+  printf("\n¤ Comparison with GSL's [gsl_interp_linear] and [gsl_interp_eval_integ];\n");
+
   defIntegral( numOfPts, xData, yData, lowerLimit, upperLimit, absError, relError, iterationLimit );
   // ___________________________________________________________________________
 
@@ -94,6 +103,8 @@ int main( int argc, char* argv[]) {
   // ___________________________________________________________________________
 
   // __ QUADRATIC SPLINE INTERPOLATION _________________________________________
+  printf("\n-- B) Quadratic spline --\n");
+  printf("\n¤ The resultant interpolants are seen in the plot \"quad_spline_plot.png\"\n");
   quadSpline* spline_quad = quadSpline_init( numOfPts, xData, yData );
 
   for ( double evalPt = xData[0]; evalPt < xData[numOfPts]; evalPt += resolution ){
@@ -110,6 +121,8 @@ int main( int argc, char* argv[]) {
   // ___________________________________________________________________________
 
   // __ CUBIC SPLINE INTERPOLATION _____________________________________________
+  printf("\n-- C) Cubic spline --\n");
+  printf("\n¤ The resultant interpolants are seen in the plot \"cubic_spline_plot.png\"\n");
   cubicSpline* spline_cubic = cubicSpline_init( numOfPts, xData, yData );
 
   for ( double evalPt = xData[0]; evalPt < xData[numOfPts]; evalPt += resolution ){

@@ -1,0 +1,67 @@
+
+
+My student number is 201708238, and  mod(38, 22) = 16
+
+###################################
+# ------------------------------- #
+# ------- EXAM PROJECT 16 ------- #
+# ------------------------------- #
+###################################
+Title:
+
+¤ Adaptive recursive integrator with subdivision into three subintervals.
+
+
+Description:
+
+¤ Implement a (one-dimensional) adaptive recursive integrator (open or closed quadrature, at your choice) which at each iteration subdivides the interval not into two, but into three sub-intervals. Reuse points. Compare with the adaptive integrator from your homework.
+= Recursive adaptive tri-division integrator =
+============================================== 
+
+Testing integrator on different integrals...
+
+∫_0^1 dx √(x) = 2/3 = 0.666667
+---------------------------------
+Result of numerical integration  : 0.666667
+Function was called 213 times...
+-- Comparing with the integrator from the homework exercise:
+Result of numerical integration  : 0.666667
+Function was called 276 times...
+
+∫_0^1 dx 4√(1-x²) = π = 3.14159
+---------------------------------
+Result of numerical integration  : 3.14159
+Function was called 453 times...
+-- Comparing with the integrator from the homework exercise:
+Result of numerical integration  : 3.14159
+Function was called 560 times...
+
+∫_-inf^inf dx exp(-x²) = √π = 1.77245
+---------------------------------
+Result of numerical integration  : 1.77245
+Function was called 1017 times...
+-- Comparing with the integrator from the homework exercise:
+Result of numerical integration  : 1.77245
+Function was called 1152 times...
+
+∫_0^inf dx 1/(1+x²) = π/2 = 1.5708
+---------------------------------
+Result of numerical integration  : 1.5708
+Function was called 261 times...
+-- Comparing with the integrator from the homework exercise:
+Result of numerical integration  : 1.5708
+Function was called 344 times...
+
+∫-inf,0 dx  1/(1+x²) = π/2 = 1.5708
+---------------------------------
+Result of numerical integration  : 1.5708
+Function was called 261 times...
+-- Comparing with the integrator from the homework exercise:
+Result of numerical integration  : 1.5708
+Function was called 344 times...
+==============================================
+
+
+Conclusion:
+
+¤ The tri-division variant uses less recursive calls in general, so performs better all in all.

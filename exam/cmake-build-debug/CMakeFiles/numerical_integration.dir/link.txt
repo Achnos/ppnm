@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/numerical_integration.dir/main.c.o CMakeFiles/numerical_integration.dir/integration_tri.c.o  -o numerical_integration -Wl,-rpath,/usr/local/lib /usr/local/lib/libgsl.so /usr/local/lib/libgslcblas.so 

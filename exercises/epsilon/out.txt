@@ -4,9 +4,9 @@
 i. INT_MAX.
 ---------------------------------------------- 
 
-Done! Elapsed time (while loop)    = -9e-05 ms 
-Done! Elapsed time (for loop)      = -9e-05 ms 
-Done! Elapsed time (do-while loop) = -9e-05 ms 
+Done! Elapsed time (while loop)    = 0.00068 ms 
+Done! Elapsed time (for loop)      = 0.00068 ms 
+Done! Elapsed time (do-while loop) = 0.00068 ms 
 
 My max int             = 2147483647         
 The standard limit is  = 2147483647         
@@ -15,9 +15,9 @@ They differ by         = 0
 ii. INT_MIN.
 ---------------------------------------------- 
 
-Done! Elapsed time (while loop)    = -3e-05 ms 
-Done! Elapsed time (for loop)      = -3e-05 ms 
-Done! Elapsed time (do-while loop) = -3e-05 ms 
+Done! Elapsed time (while loop)    = 3e-05 ms 
+Done! Elapsed time (for loop)      = 3e-05 ms 
+Done! Elapsed time (do-while loop) = 3e-05 ms 
 
 My min int             = -2147483648         
 The standard limit is  = -2147483648         
@@ -66,9 +66,15 @@ iii) Does this sum converge as function of max?
 
 I implemented the function, and i guess it works. 
 Not sure what else to do with this assignment...
- 
+
+
+Testing if 64.3123 and 11.9 are equal:
+No, they are not equal
+Testing if 64.3123 and 64.3123 are equal: 
+No, they are not equal
+
 4) Name the digit.
 ---------------------------------------------- 
 
 Please input your digit: 
-Your digit was one.         
+Your digit was four.        

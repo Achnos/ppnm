@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="interpolation"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="1-interpolation">
+				<Option output="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/1-interpolation" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 1-interpolation"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="1-interpolation/fast">
+				<Option output="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/1-interpolation" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/."/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 1-interpolation/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/CMakeLists.txt">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cubicSpline.c">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/cubicSpline.h">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/linSpline.c">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/linSpline.h">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/main.c">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/makefile">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/quadSpline.c">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/quadSpline.h">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/utilities.c">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/utilities.h">
+			<Option target="1-interpolation"/>
+		</Unit>
+		<Unit filename="/home/marc/Dropbox/repos/ppnm/homework/1-interpolation/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

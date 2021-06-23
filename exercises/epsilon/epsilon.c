@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <limits.h>
 #include <float.h>
+#include <time.h>
 #include "funcs.h"
 
 void printDashes(){
@@ -24,7 +25,7 @@ int main(){
 
   // 1.  INT_MAX -------------------------------------------------------------------
   printf("\ni. INT_MAX.\n");
-  printDashes()
+  printDashes();
   begin = clock(); // Begin timing
 
   // We compute the INT_MAX using the while-loop
@@ -57,7 +58,7 @@ int main(){
 
   // INT_MIN -------------------------------------------------------------------
   printf("\nii. INT_MIN.\n");
-  printDashes()
+  printDashes();
   begin = clock();
 
   // Now we'll do the same for INT_MIN, using the three methods again, once again timing.
@@ -88,7 +89,7 @@ int main(){
 
   // iii. The machine epsilon --------------------------------------------------
   printf("\niii. The machine epsilon.\n");
-  printDashes()
+  printDashes();
   // IT APPEARS THAT THE OPTIMIZATION SCHEME -OFAST WILL CAUSE THE COMPUTATIONS OF EPSILONS BELOW
   // TO BE BROKEN, SINCE WE WILL EVALUATE f!=0 INSTEAD, AND GET INFINITE PRECISION.
 
@@ -166,7 +167,7 @@ int main(){
   // 2. ------------------------------------------------------------------------
 
   printf("\n2) Sum_up/down.\n");
-  printDashes()
+  printDashes();
 
   int max = INT_MAX / 2;
 
@@ -206,14 +207,32 @@ int main(){
 
   // 3. ------------------------------------------------------------------------
   printf("\n3) Int equal function.\n");
-  printDashes()
+  printDashes();
 
-  printf("\nI implemented the function, and i guess it works. \nNot sure what else to do with this assignment...\n ");
+  double a = 64.31235;
+  double b = 11.9;
 
+  printf("\nI implemented the function, and i guess it works. \nNot sure what else to do with this assignment...\n");
+
+  printf("\n\nTesting if %g and %g are equal:\n", a, b);
+  int returnval = equal(a, b, 1e-5, 1e-5);
+  if(returnval == 1){
+    printf("Yes, they are equal\n");
+  }
+  else{
+    printf("No, they are not equal\n");
+  }
+  returnval = printf("Testing if %g and %g are equal: \n", a, a);
+  if(returnval == 1){
+    printf("Yes, they are equal\n");
+  }
+  else{
+    printf("No, they are not equal\n");
+  }
   // 4. ------------------------------------------------------------------------
   int digit;
   printf("\n4) Name the digit.\n");
-  printDashes()
+  printDashes();
   printf("Please input your digit: \n");
 
   if (scanf("%d", &digit) == 1) {

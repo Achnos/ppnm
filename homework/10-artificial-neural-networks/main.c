@@ -7,6 +7,10 @@
 #include "neuralnetwork.h"
 #include "input2Array.h"
 
+double negsin( double val ){
+    return -sin(val);
+}
+
 int main(int argc, char* argv[]){
     // _________________________________________________________________________________________________________________
 
@@ -24,7 +28,7 @@ int main(int argc, char* argv[]){
     input2Array(numOfDataPts, xData, yData, argv[1]);
 
     printf("Initiallizing a neural network of 1 hidden layer with %d neurons...\n", numOfNeurons);
-    neural_network* network = neural_network_alloc(numOfNeurons, &cos);
+    neural_network* network = neural_network_alloc(numOfNeurons, &cos, &negsin, &sin);
 
     printf("Training network...\n");
     neural_network_train(network, xData, yData);
@@ -33,7 +37,7 @@ int main(int argc, char* argv[]){
     double xMin = 0;
     double xMax = 11;
     for( double val = xMin; val <= xMax; val += 1.0/8 ){
-        fprintf(myOutputFilestream, "%10g %10g %10g\n", val, neural_network_response(network, val), cos(val));
+        fprintf(myOutputFilestream, "%10g %10g %10g %10g %10g %10g %10g\n", val, neural_network_response(network, val), cos(val), neural_network_response_derivative(network, val), -sin(val), neural_network_response_integral(network, 0, val), sin(val));
     }
     fclose(myOutputFilestream);
 

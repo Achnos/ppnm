@@ -8,4 +8,8 @@ set grid
 set tics in
 plot "predictions.txt" using 1:3 with line linewidth 2 col MidnightBlue title "$\cos(x)$ - exact"\
 , "predictions.txt" using 1:2 with line linewidth 2 col ProcessBlue title "Model prediction"\
-, "cos_tabulated.txt" using 1:2 with points pointtype 2 title "Tabulated datapoints"
+, "cos_tabulated.txt" using 1:2 with points pointtype 2 title "$\cos(x)$ Tabulated datapoints"\
+, "predictions.txt" using 1:5 with line linewidth 2 col BrickRed title "$-\sin(x)$ - exact"\
+, "predictions.txt" using 1:4 with line linewidth 2 col Salmon title "Model prediction derivative"\
+, "predictions.txt" using 1:7 with line linewidth 2 col PineGreen title "$\sin(x)$ - exact"\
+, "predictions.txt" using 1:6 with line linewidth 2 col SeaGreen title "Model prediction integral"

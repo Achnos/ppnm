@@ -107,7 +107,7 @@ int main(){
 	}
 
 
-	printf("\nTesting komplex_conj()\n");
+	printf("\nTesting komplex_abs()\n");
 	printf("----------------------------------------------------\n");
 
 	double aAbs = komplex_abs(a);

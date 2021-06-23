@@ -16,6 +16,13 @@ void vector_print( char* string, gsl_vector* vector){
 }
 
 int main( ) {
+	printf("\n");
+	printf("A)\nConsider the following system of linear equations in the matrix form,\n\n");
+	printf("[ 6.13   -2.90    5.86]   [x0]     [6.23]\n");
+	printf("[ 8.08   -6.31   -3.89] * [x1]  =  [5.37]\n");
+	printf("[-4.36    1.00    0.19]   [x2]     [2.29]\n");
+	printf("\nSolve it using GSL's  [Householder solver for linear systems]. \n");
+
 	int numOfRows = 3;
 	int numOfCols = 3;
 
@@ -44,6 +51,9 @@ int main( ) {
 	gsl_matrix_free( matrix_A_copy );
 	gsl_vector_free( vector_x			 );
 
+	printf("\n");
+	printf("B)\nCompute the eigenvalues and eigenvectors of 4-th order Hilbert matrix\n");
+	printf("H_{ij} = 1/(i + j + 1). \n\n");
 	int order = 4;
 	gsl_matrix* HillbertMatrix = gsl_matrix_alloc( order, order );
 
@@ -69,7 +79,7 @@ int main( ) {
 		printf ("eigenvector = \n");
 		gsl_vector_fprintf (stdout, &eigenvectors_i.vector, "%g");
 	}
-	
+
 	gsl_vector_free (eigenvalues);
 	gsl_matrix_free (eigenvectors);
 

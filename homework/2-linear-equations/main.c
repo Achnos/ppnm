@@ -19,7 +19,12 @@ int main (int argc, char* argv[]){
   }
   unsigned int seed   =   time(NULL) ;
 
-  int numOfReps = 3e2;
+  printf( "\n##############################  " );
+  printf( "\n# ---- LINEAR EQUATIONS ---- #  " );
+  printf( "\n##############################\n" );
+  printf("\n-- A) Solving linear equations using QR-decomposition by modified Gram-Schmidt orthogonalization --\n");
+
+  int numOfReps = 260;
   int startRep = 200;
 
   int numOfRows = 5;
@@ -41,20 +46,25 @@ int main (int argc, char* argv[]){
   gsl_matrix* inverseMatrix    =  gsl_matrix_alloc(numOfRows, numOfRows);
   gsl_matrix* checkInverse     =  gsl_matrix_alloc(numOfRows, numOfRows);
 
+  printf("\nGenerating a random tall (n>m) matrix A... \"\n");
 	set_data(testMatTall, RHSvecTall, &seed);
   set_data(testMatSquare, RHSvecSquare, &seed);
   gsl_matrix_memcpy(ortgnlMatTall, testMatTall);
 
   gramSchmidt_decomp(ortgnlMatTall, triangMatTall);
-
+  print_matrix(numOfRows, testMatTall, "Tall test matrix A:");
+  printf("Factorizing into QR...");
+  printf("Checking that R is upper triangular...");
   print_matrix(numOfCols, triangMatTall, "Triangular matrix:");
 
+  printf("Checking that Q^T * Q = 1...");
   gsl_blas_dgemm(CblasTrans, CblasNoTrans, 1, ortgnlMatTall, ortgnlMatTall, 0, checkOrtgnl);
   print_matrix(numOfCols, checkOrtgnl, "Q^T * Q:");
 
+  printf("Checking that Q * R = A...");
   gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1, ortgnlMatTall, triangMatTall, 0, checkRes);
-  print_matrix(numOfRows, checkRes, "QR :");
-  print_matrix(numOfRows, testMatTall, "Tall test matrix:");
+  print_matrix(numOfRows, checkRes, "Q * R :");
+  print_matrix(numOfRows, testMatTall, "A :");
 
   print_matrix(numOfRows, testMatSquare, "Square test matrix for solver:");
   gsl_matrix_memcpy(ortgnlMatSquare, testMatSquare);
@@ -64,6 +74,7 @@ int main (int argc, char* argv[]){
   vector_print( "\nFrom gramSchmidt_solve             Ax = ", checkRHS);
   vector_print( "\nShould be equal to right-hand side  b = ", RHSvecSquare);
 
+  printf("\n-- B) Matrix inverse by Gram-Schmidt QR factorization --\n");
   gramSchmidt_inverse(ortgnlMatSquare, triangMatSquare, inverseMatrix);
   gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1, testMatSquare, inverseMatrix, 0, checkInverse);
   print_matrix(numOfRows, checkInverse, "\nChecking A*A^{-1} = I :");
@@ -83,7 +94,9 @@ int main (int argc, char* argv[]){
   gsl_matrix_free (inverseMatrix);
   gsl_matrix_free (checkInverse);
 
+  printf("\n-- C) Operations count for QR-decomposition and comparison with GSL --\n");
   test_runtime(numOfReps, startRep, argv[1], argv[2], &seed);
+  printf("\nDone! The plots can be seen in \"part_C_myMethod.png\" and \"part_C_gsl.png\".\n");
 
   return 0;
 }

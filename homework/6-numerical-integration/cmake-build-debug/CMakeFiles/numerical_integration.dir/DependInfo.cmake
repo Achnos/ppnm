@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/marc/Dropbox/repos/ppnm/homework/numerical-integration/integration.c" "/home/marc/Dropbox/repos/ppnm/homework/numerical-integration/cmake-build-debug/CMakeFiles/numerical_integration.dir/integration.c.o"
-  "/home/marc/Dropbox/repos/ppnm/homework/numerical-integration/main.c" "/home/marc/Dropbox/repos/ppnm/homework/numerical-integration/cmake-build-debug/CMakeFiles/numerical_integration.dir/main.c.o"
+  "/home/marc/Dropbox/repos/ppnm/homework/6-numerical-integration/integration.c" "/home/marc/Dropbox/repos/ppnm/homework/6-numerical-integration/cmake-build-debug/CMakeFiles/numerical_integration.dir/integration.c.o"
+  "/home/marc/Dropbox/repos/ppnm/homework/6-numerical-integration/main.c" "/home/marc/Dropbox/repos/ppnm/homework/6-numerical-integration/cmake-build-debug/CMakeFiles/numerical_integration.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

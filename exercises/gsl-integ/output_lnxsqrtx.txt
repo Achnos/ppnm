@@ -1,1 +1,4 @@
+
+
 A) The result of numerically integrating ln(x)/sqrt(x) is	-4 
+B), C) were also solved, and the resulting plots are seen in "integrated_error_function_plot.png" and "integrated_bessel_function_plot.png"

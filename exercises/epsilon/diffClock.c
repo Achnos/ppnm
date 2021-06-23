@@ -15,8 +15,8 @@ double diffClock(clock_t startTime, clock_t endTime){
 
   */
 
-  double diffTicks  =  clock1 - clock2;
-  double diffms     =  (diffticks * 10) / CLOCKS_PER_SEC;
+  double diffTicks  =  startTime - endTime;
+  double diffms     =  fabs(diffTicks * 10) / CLOCKS_PER_SEC;
 
   return diffms;
 }

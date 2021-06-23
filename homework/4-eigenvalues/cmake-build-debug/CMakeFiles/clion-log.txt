@@ -1,0 +1,13 @@
+/home/marc/Documents/clion-2019.3.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/marc/Dropbox/repos/ppnm/homework/4-eigenvalues
+-- The C compiler identification is GNU 9.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.1") 
+-- Found GSL: /usr/local/include (found version "2.6") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/marc/Dropbox/repos/ppnm/homework/4-eigenvalues/cmake-build-debug

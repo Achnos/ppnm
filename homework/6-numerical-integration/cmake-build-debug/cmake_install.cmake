@@ -1,4 +1,4 @@
-# Install script for directory: /home/marc/Dropbox/repos/ppnm/homework/numerical-integration
+# Install script for directory: /home/marc/Dropbox/repos/ppnm/homework/6-numerical-integration
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/marc/Dropbox/repos/ppnm/homework/numerical-integration/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/marc/Dropbox/repos/ppnm/homework/6-numerical-integration/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

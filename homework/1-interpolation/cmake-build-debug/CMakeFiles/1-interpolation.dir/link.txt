@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/1-interpolation.dir/main.c.o CMakeFiles/1-interpolation.dir/cubicSpline.c.o CMakeFiles/1-interpolation.dir/linSpline.c.o CMakeFiles/1-interpolation.dir/quadSpline.c.o CMakeFiles/1-interpolation.dir/utilities.c.o  -o 1-interpolation -Wl,-rpath,/usr/local/lib /usr/local/lib/libgsl.so /usr/local/lib/libgslcblas.so 

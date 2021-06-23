@@ -28,7 +28,7 @@ int main( int argc, char* argv[] ) {
     gslFunctionLogxSqrtx.params    =  NULL;
 
     double result  =  integratedFunction( lowerLimit, upperLimit, &gslFunctionLogxSqrtx, absError, relError, iterationLimit );
-    fprintf( myOutputFileStream_lnxSqrtx, "A) The result of numerically integrating ln(x)/sqrt(x) is\t%g \n", result);
+    fprintf( myOutputFileStream_lnxSqrtx, "\n\nA) The result of numerically integrating ln(x)/sqrt(x) is\t%g \n", result);
 
 
 
@@ -73,6 +73,8 @@ int main( int argc, char* argv[] ) {
 
       fprintf(myOutputFileStream_besselInt, "%10g %10g %10g %10g\n", val, result_n0, result_n1, result_n2);
     }
+
+    fprintf( myOutputFileStream_lnxSqrtx, "B), C) were also solved, and the resulting plots are seen in \"integrated_error_function_plot.png\" and \"integrated_bessel_function_plot.png\"\n");
 
     return 0;
   }
