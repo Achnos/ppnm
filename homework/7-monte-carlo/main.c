@@ -89,7 +89,7 @@ int main(int argc, char* argv[]){
     char filename[] = "error_scaling.txt";
     int totalNumOfReps  =  (int) 1e3;
     int stepSize        =  (int) 1e2;
-    /*FILE* myOutPutFileStream = fopen(filename, "w");
+    FILE* myOutPutFileStream = fopen(filename, "w");
     for (int rep = 1; rep <= totalNumOfReps; rep++){
         int thisNumOfPts = rep * stepSize;
 
@@ -99,7 +99,7 @@ int main(int argc, char* argv[]){
         fprintf(myOutPutFileStream, "%i\t%g\t%g\n", thisNumOfPts, error_test, error_test_quasi);
     }
     fclose(myOutPutFileStream);
-*/    printf("Done! The data has been written to %s\n", filename);
+    printf("Done! The data has been written to %s\n", filename);
 
 
     printf("\n\n-----------------------------------------------");
@@ -113,12 +113,17 @@ int main(int argc, char* argv[]){
 
     int numOfRecalls = 0;
     double meanRecalls = 0;
-    double result_test_strat = plain_montecarlo_stratifiedSampling( dim_test, testFunc, lowerBound_test, upperBound_test, absAcc, relAcc, numOfRecalls, meanRecalls );
 
-    //  print_testResults("Done! The numerical estimate of the integral using quasi-random  numbers is", result_test_strat, exactVal, 0);
+    double new_testFunc(double *pt){
+      double first_val    =   pt[0];
+	    double second_val   =   pt[1];
+      return cos(first_val) * cos(second_val);
+    }
 
+    double result_test_strat = plain_montecarlo_stratifiedSampling( dim_test, new_testFunc, lowerBound_test, upperBound_test, absAcc, relAcc, numOfRecalls, meanRecalls );
+
+    print_testResults("Done! The numerical estimate of the integral using quasi-random  numbers is", result_test_strat, exactVal, 0);
 
     printf("-----------------------------------------------\n");
     return 0;
 }
-

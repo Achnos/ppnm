@@ -11,7 +11,7 @@ ERRDATA =  error_scaling.txt
 ERRGPI  =  error_scaling.gpi
 
 EXE   	=  main
-OBJ  	=  main.o montecarlo.o
+OBJ  		=  main.o montecarlo.o
 HDRS    =  montecarlo.h
 TXT     =  output.txt
 
@@ -30,4 +30,4 @@ $(TXT) : $(EXE)
 $(EXE): $(OBJ) $(HDRS)
 
 clean:
-	$(RM) $(EXE) $(TXT) $(OBJ)
+	$(RM) $(EXE) $(TXT) $(OBJ) $(ERRPLOT) $(ERRDATA)

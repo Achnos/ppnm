@@ -1,0 +1,44 @@
+-----------------------------------------------
+A)
+Plain Monte Carlo integration
+-----------------------------------------------
+Testing plain Monte Carlo integration routine...
+
+∫_0^1 dx √(x) = 2/3 = 0.666667
+-----------------------------------------------
+
+The numerical estimate of the integral is  : 0.666693
+Actual error                     : 2.64833e-05
+Computed error estimate          : 0.000235641
+
+∫_0^π dx/π ∫_0^π dy/π ∫_0^π  dz/π [1-cos(x)cos(y)cos(z)]^{-1} = Γ(1/4)4/(4π3) ≈ 1.3932
+-----------------------------------------------
+
+The numerical estimate of the integral using pseudo-random numbers is  : 1.40304
+Actual error                     : 0.00983925
+Computed error estimate          : 0.0114552
+
+
+-----------------------------------------------
+B)
+Quasi random numbers
+-----------------------------------------------
+Testing quasi-random Monte Carlo integration routine...
+
+Done! The numerical estimate of the integral using quasi-random  numbers is  : 1.38122
+Actual error                     : 0.0119846
+Computed error estimate          : 0.000423865
+Testing the scaling of errors in quasi- vs pseudo-random number sequences...
+Done! The data has been written to error_scaling.txt
+
+
+-----------------------------------------------
+C)
+Recursive stratified sampling
+-----------------------------------------------
+Testing recursive stratified sampling Monte Carlo integration routine...
+
+Done! The numerical estimate of the integral using quasi-random  numbers is  : 0.00895961
+Actual error                     : 1.38424
+Computed error estimate          : 0
+-----------------------------------------------

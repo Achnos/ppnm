@@ -22,4 +22,5 @@ double plain_montecarlo_stratifiedSampling(  int     dim                        
                                              double  relAcc                      ,
                                              int     numOfRecalls                ,
                                              double  meanRecall                      );
+
 #endif //MONTE_CARLO_MONTECARLO_H
