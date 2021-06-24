@@ -1,3 +1,0 @@
-/home/marc/Dropbox/repos/ppnm/homework/10-artificial-neural-networks/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/marc/Dropbox/repos/ppnm/homework/10-artificial-neural-networks/cmake-build-debug/CMakeFiles/10-artificial-neural-networks.dir
-/home/marc/Dropbox/repos/ppnm/homework/10-artificial-neural-networks/cmake-build-debug/CMakeFiles/edit_cache.dir

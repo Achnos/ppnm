@@ -122,7 +122,7 @@ int main(int argc, char* argv[]){
 
     double result_test_strat = plain_montecarlo_stratifiedSampling( dim_test, new_testFunc, lowerBound_test, upperBound_test, absAcc, relAcc, numOfRecalls, meanRecalls );
 
-    print_testResults("Done! The numerical estimate of the integral using quasi-random  numbers is", result_test_strat, exactVal, 0);
+    print_testResults("Done! The numerical estimate of the integral using stratified monte carlo techniques numbers is", result_test_strat, exactVal, 0);
 
     printf("-----------------------------------------------\n");
     return 0;
