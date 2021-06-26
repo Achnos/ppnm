@@ -2,7 +2,9 @@
 Praktisk programmering og numeriske metoder repository 
 
 **Name:** Marc Breiner Sørensen
+
 **Stud.#:** 201708238
+
 **Exam project #:** 16
 
 **General information**
