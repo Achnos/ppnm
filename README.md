@@ -11,3 +11,6 @@ Praktisk programmering og numeriske metoder repository
 This repository consists of three main directories. 
 The **exam** subfolder consist of my solution to the given exam project, while the **exercises** and **homework** subfolders 
 are my solutions to the, respectively, exercises and homeworks. The remainding subfolders are simply here for convenience.
+
+
+The solutions to exercises, homeworks and the exam will generally ber found in the **output.txt** file.
